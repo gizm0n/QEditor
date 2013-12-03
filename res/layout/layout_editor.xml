@@ -1,26 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:greendroid="http://schemas.android.com/apk/res/com.hipipal.texteditor"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <fr.xgouchet.texteditor.ui.view.AdvancedEditText
+    android:orientation="vertical"
+    >
+    
+    <com.hipipal.texteditor.ui.view.AdvancedEditText
         android:id="@+id/editor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="4"
         android:gravity="top|left"
-        android:inputType="textMultiLine"
+        android:inputType="textMultiLine|textNoSuggestions"
         android:scrollbarAlwaysDrawHorizontalTrack="true"
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbarSize="5dp"
         android:scrollbars="horizontal|vertical"
-        android:textCursorDrawable="@null"
         android:typeface="monospace" >
 
         <requestFocus />
-    </fr.xgouchet.texteditor.ui.view.AdvancedEditText>
+    </com.hipipal.texteditor.ui.view.AdvancedEditText>
 
+	<LinearLayout
+		android:id="@+id/return_bar_box"
+		android:layout_width="fill_parent"
+		android:background="@color/cgrey6"
+		android:layout_height="wrap_content"
+		>			
+		
+		<ImageButton
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:padding="5.0dip"
+		android:layout_margin="0.0dip"
+		android:src="@drawable/ic_left" 
+		android:background="@null"
+		android:onClick="onLeft"		
+		/>
+		
+		<ImageButton
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:padding="5.0dip"
+		android:layout_margin="0.0dip"
+		android:src="@drawable/ic_right" 
+		android:background="@null"
+		android:onClick="onRight"		
+		/>
+		
+		<ImageButton
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:padding="5.0dip"
+		android:src="@drawable/ic_save_a" 
+		android:background="@null"
+		android:onClick="onSave"		
+		/>
+
+				
+		<ImageButton
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:padding="5.0dip"
+		android:src="@drawable/ic_save_as" 
+		android:background="@null"
+		android:onClick="onSaveAs"		
+		/>		
+		
+		<ImageButton
+		android:id="@+id/play_btn"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:src="@drawable/ic_go" 
+		android:padding="5.0dip"
+		android:onClick="onPlay"				
+		android:background="@null"
+		/>
+		
+		<ImageButton
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:padding="5.0dip"
+		android:layout_margin="0.0dip"
+		android:src="@drawable/ic_undo_2" 
+		android:background="@null"
+		android:onClick="onBack"		
+		/>		
+		
+		<ImageButton
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:padding="5.0dip"
+		android:src="@drawable/ic_search2" 
+		android:background="@null"
+		android:onClick="onSearch"
+		
+		/>
+		
+
+		
+		<!--ImageButton
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:padding="5.0dip"
+		android:src="@drawable/ic_from_website" 
+		android:background="@null"
+		android:onClick="onBrowser"
+		/-->
+				
+		<ImageButton
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:padding="5.0dip"
+		android:src="@drawable/ic_storage" 
+		android:background="@null"
+		android:onClick="onHistory"
+		/>		
+
+		<ImageButton
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:padding="5.0dip"
+		android:src="@drawable/ic_collections_history" 
+		android:background="@null"
+		android:onClick="onSetting"
+		/>		
+		
+	</LinearLayout>	
     <include
         android:id="@+id/searchLayout"
         android:layout_width="match_parent"

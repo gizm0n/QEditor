@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:greendroid="http://schemas.android.com/apk/res/com.hipipal.texteditor"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@color/cwhite"
+	android:orientation="vertical">
+
+ 	<LinearLayout 
+		android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="2dp"
+		android:id="@+id/topline"
+		android:background="@drawable/gradual"
+		/>  
+    	
+	<FrameLayout
+		android:id="@id/gd_action_bar_content_view"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:layout_weight="1"
+		>
+		
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"				
+				>
+				<ListView
+					android:id="@android:id/list"
+					android:layout_height="fill_parent"
+					android:layout_width="fill_parent" />
+				<GridView
+					android:id="@+id/GridView" 
+					android:layout_width="fill_parent" 
+					android:layout_height="fill_parent" 
+					android:paddingTop="20dp"
+					android:numColumns="auto_fit" 
+					android:horizontalSpacing="10dp" 
+					android:verticalSpacing="10dp" 
+					android:columnWidth="120dp" 
+					android:stretchMode="columnWidth" 
+					android:listSelector="@android:color/transparent"  
+					android:visibility="gone"
+					
+					android:gravity="center">
+				</GridView> 
+				
+				<WebView android:id="@+id/wv"
+    				android:layout_width="fill_parent"
+    				android:layout_height="fill_parent"
+    				android:layout_x="0.0dip"
+    				android:layout_y="0.0dip"
+    				android:layout_weight="1.0" />
+			</LinearLayout>	
+	</FrameLayout>
+	
+	<LinearLayout 
+		android:id="@+id/return_bar"
+		android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="1dp"
+		android:visibility="gone"
+		/>
+		
+	<LinearLayout
+		android:id="@+id/return_bar_box"
+		android:layout_width="fill_parent"
+		android:background="@null"
+		android:layout_height="wrap_content"
+		android:visibility="gone"
+		>			
+		
+	<LinearLayout
+		android:id="@+id/notify_bar"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:paddingTop="2dip"
+		android:paddingBottom="2dip"
+        android:visibility="gone"
+        android:onClick="onNotify"		
+		>	
+		<TextView
+		android:id="@+id/notify"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:focusable="true"
+		android:clickable="true"
+		android:gravity="center_horizontal"
+		android:text="notify:"
+		android:textColor="@color/link"
+		android:autoLink="web"
+		android:onClick="onNotify"		
+		/>	
+	</LinearLayout>			
+	</LinearLayout>	
+
+	<LinearLayout
+		android:id="@+id/return_bar_box"
+		android:layout_width="fill_parent"
+		android:layout_height="0dp"
+		android:background="@color/cgrey6"
+		>	
+		<ImageButton
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:paddingTop="10dip"
+		
+		android:layout_margin="10.0dip"
+		android:src="@drawable/ic_right_a" 
+		android:background="@null"
+		/>
+
+		
+		<ImageButton
+		android:gravity="center"
+		android:id="@+id/download_btn"
+		android:layout_weight="3"		
+		style="@style/gridBox_Title"
+		android:background="@null"
+		android:padding="5.0dip"
+		android:layout_width="0dp"
+		android:scaleType="centerInside"
+		android:textColor="@color/cwhite"
+		android:textSize="18sp"
+		android:onClick="onPlay"
+		android:src="@drawable/ic_go" 
+		android:layout_height="wrap_content"
+		/>
+		<ImageButton
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:onClick="onLeft"
+		android:layout_margin="10.0dip"
+		android:src="@drawable/ic_right_a" 
+		android:background="@null"
+		/>
+
+	</LinearLayout>
+	<include layout="@layout/hi_ad_mod" /> 
+</LinearLayout>

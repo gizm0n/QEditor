@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/gd_action_bar_host"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@color/cwhite3"
+	android:orientation="vertical">
+			
+ 	<LinearLayout 
+		android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="2dp"
+		android:background="@drawable/gradual2"/>   	
+		
+	<FrameLayout
+		android:id="@+id/gd_action_bar_content_view"
+		android:layout_height="0dip"
+		android:layout_width="fill_parent"
+		android:layout_weight="1">
+		<ListView
+			android:id="@android:id/list"
+			android:layout_height="fill_parent"
+			android:layout_width="fill_parent" />
+	</FrameLayout>
+		
+	<!--include layout="@layout/hi_ad_mod" /--> 
+		
+				
+<LinearLayout
+	android:id="@+id/setting_box"
+    xmlns:android="http://schemas.android.com/apk/res/android"		
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:visibility="gone"
+	
+	>
+    	<LinearLayout 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/cgrey6"
+		>
+	<RelativeLayout 
+		android:id="@+id/locallist"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:clickable="false"	
+		android:padding="5.0dip"
+		>
+	   <include android:id="@+id/save_div" layout="@layout/v_save_bar" />     
+	</RelativeLayout>
+	</LinearLayout>
+</LinearLayout>
+					
+	<LinearLayout
+		android:id="@+id/return_bar_box"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/cgrey6"
+		android:visibility="gone"
+		>			
+				
+		<ImageButton
+		android:padding="5.0dip"
+		android:id="@+id/left_nav"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:onClick="onUp"
+		android:src="@drawable/ic_up"
+		android:background="@drawable/transparent"
+		
+		/>
+		
+		<ImageButton
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		/>
+		
+		<ImageButton
+		android:padding="5.0dip"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:src="@drawable/ic_undo_2" 
+		android:onClick="onBack"		
+		android:background="@drawable/transparent"
+		/>		
+		<ImageButton
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		/>
+		
+		<ImageButton
+		android:padding="5.0dip"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:src="@drawable/ic_right" 
+		android:onClick="onForward"		
+		android:background="@drawable/transparent"
+		/>		
+
+
+		</LinearLayout>		
+</LinearLayout>

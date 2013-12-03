@@ -1,29 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fr.xgouchet.texteditor"
+    package="com.hipipal.texteditor"
     android:installLocation="auto"
-    android:versionCode="19"
-    android:versionName="Release 1.8.1" >
+    android:versionCode="3"
+    android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="16" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <permission
-        android:name="fr.xgouchet.texteditor.permission.TED_INTERNAL"
+        android:name="com.hipipal.texteditor.permission.TED_INTERNAL"
         android:label="@string/permission_internal"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="fr.xgouchet.texteditor.permission.TED_INTERNAL" />
+    <uses-permission android:name="com.hipipal.texteditor.permission.TED_INTERNAL" />
 
     <application
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" >
+        android:label="@string/app_name"
+        android:theme="@style/Theme.GDCatalog"
+        android:name=".MNApp" >
 
         <!-- Ted main activity ... ie a text field :) -->
+
+        <activity android:name=".MTubebook" android:label="@string/app_name" android:screenOrientation="user" android:configChanges="orientation|keyboardHidden"/>                
+        
         <activity
+        	android:theme="@style/Theme.GDCatalog"
             android:name=".TedActivity"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|fontScale|screenSize|smallestScreenSize"
             android:windowSoftInputMode="adjustResize" >
@@ -39,8 +50,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.EDIT" />
-                <action android:name="fr.xgouchet.texteditor.ACTION_TED_BOX_OPEN" />
-                <action android:name="fr.xgouchet.texteditor.ACTION_TED_WIDGET_OPEN" />
+                <action android:name="com.hipipal.texteditor.ACTION_TED_BOX_OPEN" />
+                <action android:name="com.hipipal.texteditor.ACTION_TED_WIDGET_OPEN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
 
@@ -51,7 +62,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.EDIT" />
-                <action android:name="fr.xgouchet.texteditor.ACTION_TED_WIDGET_OPEN" />
+                <action android:name="com.hipipal.texteditor.ACTION_TED_WIDGET_OPEN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
 
@@ -102,15 +113,26 @@
             </intent-filter>
         </activity>
 
+        <activity
+        	android:theme="@style/Theme.GDCatalog"
+            android:name=".TedLocalActivity"
+            android:label="@string/title_settings"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="user">
+        </activity>
+        
         <!-- Ted settings activity -->
         <activity
             android:name=".TedSettingsActivity"
             android:label="@string/title_settings"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/Theme.GDCatalog"
+             >
         </activity>
 
         <!-- Ted save as activity -->
         <activity
+          	android:theme="@style/Theme.GDCatalog"
             android:name=".TedSaveAsActivity"
             android:label="@string/title_save_as"
             android:windowSoftInputMode="adjustResize" >
@@ -145,18 +167,27 @@
 
         <!-- Ted Configure widget activity -->
         <activity
-            android:name=".TedWidgetConfigActivity"
+            android:name="com.hipipal.texteditor.TedWidgetConfigActivity"
             android:exported="true"
-            android:permission="fr.xgouchet.texteditor.permission.TED_INTERNAL" >
+            android:permission="com.hipipal.texteditor.permission.TED_INTERNAL" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
 
+
+        <activity android:name=".MSettingAct" android:label="@string/app_name" android:screenOrientation="user" android:configChanges="orientation|keyboardHidden"/>                
+        <activity android:name=".MFTPSettingAct" android:label="@string/app_name" android:screenOrientation="user" android:configChanges="orientation|keyboardHidden"/>                
+
+        <activity android:name=".OFeedBackAct" android:label="@string/app_name" android:screenOrientation="user" android:configChanges="orientation|keyboardHidden"/>                
+        <activity android:name=".OAboutAct" android:label="@string/app_name" android:screenOrientation="user" android:configChanges="orientation|keyboardHidden"/>
+
+        <service android:name=".FTPServerService" />
+
         <!-- Widget Receiver -->
         <receiver
-            android:name=".TedAppWidgetProvider"
-            android:permission="fr.xgouchet.texteditor.permission.TED_INTERNAL" >
+            android:name="com.hipipal.texteditor.TedAppWidgetProvider"
+            android:permission="com.hipipal.texteditor.permission.TED_INTERNAL" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

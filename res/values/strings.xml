@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Ted</string>
-    <string name="app_name_full">Ted (Text Editor)</string>
+    <string name="app_name">QEdit</string>
+    <string name="app_name_full">QEdit (Text Editor)</string>
 
     <!--  -->
-    <string name="permission_internal">Ted Internal Permission</string>
+    <string name="permission_internal">QEdit Internal Permission</string>
 
     <!-- Titles -->
-    <string name="title_editor">Ted - %1$s</string>
-    <string name="title_editor_dirty">Ted - %1$s *</string>
-    <string name="title_editor_readonly">Ted - [%1$s]</string>
-    <string name="title_save_as">Ted - Save as ... </string>
-    <string name="title_open_recent">Ted - Open Recent</string>
-    <string name="title_settings">Ted - Settings </string>
-    <string name="title_about">Ted - About ... </string>
-    <string name="title_font">Ted - Text Font </string>
+    <string name="title_editor">QEdit - %1$s</string>
+    <string name="title_editor_dirty">QEdit - %1$s *</string>
+    <string name="title_editor_readonly">QEdit - [%1$s]</string>
+    <string name="title_save_as">QEdit - Save as ... </string>
+    <string name="title_open">QEdit - Open File</string>
+
+    <string name="title_open_recent">QEdit - Open Recent</string>
+    <string name="title_settings">QEdit - Settings </string>
+    <string name="title_about">QEdit - About ... </string>
+    <string name="title_font">QEdit - Text Font </string>
 
     <!-- Config screen strings -->
     <string name="config_cat_display">Display</string>
@@ -45,11 +47,11 @@
     <string name="config_summary_line_numbers">Display the line number at the left of the page</string>
     <string name="config_summary_word_wrap">Lines will break in new lines if they are too wide for the screen</string>
     <string name="config_summary_scroll_fling">Uncheck if you have performance issues</string>
-    <string name="config_summary_use_home_page">Select a file to open when you launch Ted from your home screen</string>
+    <string name="config_summary_use_home_page">Select a file to open when you launch QEdit from your home screen</string>
     <string name="config_summary_auto_save_overwrite_on">Auto save will overwrite existing files</string>
     <string name="config_summary_auto_save_overwrite_off">Auto save will only work with new files</string>
 
-    <!-- Options Menu in TED -->
+    <!-- Options Menu in QEdit -->
     <string name="menu_new">New</string>
     <string name="menu_open">Open</string>
     <string name="menu_open_recent">Recent files</string>
@@ -72,9 +74,40 @@
     <string name="ui_art_licence">Artistic Licence</string>
     <string name="ui_history">History</string>
     <string name="ui_force_read_only">Open as read only</string>
+	<string name="about_content">QEdit is a text editor for android tablets and phones, besides text edit, it can make python / HTML development on android more fun and convenient especially.</string>
 
     <!-- Misc Strings -->
     <string name="lorem_ipsum">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas porttitor neque semper sem fermentum pretium. Sed pharetra dui faucibus massa malesuada in condimentum mi gravida."</string>
     <string name="art_licence">"All icons for this app were created and belong to the author of the app : Xavier Gouchet (android@xgouchet.fr)."</string>
+
+    <string name="info_select">Open</string>
+    <string name="info_go">Run</string>
+    <string name="info_help">Help</string>
+    <string name="info_recent">Recent files...</string>
+
+    <string name="cannot_edit">Can not edit</string>
+    <string name="cannot_save">Can not save</string>
+    <string name="cannot_empty">File content must not be empty</string>
+
+    <string name="confirm_save">Confirm to cover</string>
+    <string name="info_new">New</string>
+    <string name="dir_new">New directory</string>
+    <string name="dir_exists">The directory exists</string>
+    <string name="cannot_foward">Can not go back</string>
+    <string name="file_exists">File exits, please rename</string>
+	<string name="search_hint"></string>    
+
+	<string name="video_src">Video {0}</string>
+	<string name="play_video">Play</string>
+	<string name="no_videos_found">No videos found in this page</string>
+	<string name="play_from_website">Videos website</string>
+	<string name="pls_install_a8_play">Please install A8 Video Player first</string>
+	<string name="download_as">Download and save as</string>
+	<string name="err_not_input">Please input the keyword to search</string>    
+	<string name="info_browser">Browser</string>    
+	<string name="pls_open_file">No file yet</string>
+
+	<string name="support_intro">It\'s not Python / HTML file</string>
+	<string name="pls_install_ext_plg">Please install the QPython Plugin</string>
 
 </resources>

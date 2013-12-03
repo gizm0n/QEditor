@@ -3,14 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:visibility="gone" >
+    android:background="@color/cgrey6"
+    android:paddingTop="5dp"
+    android:visibility="gone">
 
     <ImageButton
         android:id="@+id/buttonSearchClose"
         style="@style/ButtonSmall"
+        android:background="@drawable/silver_button" 
+        android:layout_marginBottom="2.0dip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_delete" />
+        android:src="@drawable/ic_remove" />
 
     <EditText
         android:id="@+id/textSearch"
@@ -27,13 +31,17 @@
         style="@style/ButtonSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_media_previous" />
+        android:background="@drawable/silver_button"
+        android:layout_marginBottom="2.0dip"
+        android:src="@drawable/ic_left" />
 
     <ImageButton
         android:id="@+id/buttonSearchNext"
         style="@style/ButtonSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_media_next" />
+        android:background="@drawable/silver_button"
+        android:layout_marginBottom="2.0dip"
+        android:src="@drawable/ic_right" />
 
 </LinearLayout>

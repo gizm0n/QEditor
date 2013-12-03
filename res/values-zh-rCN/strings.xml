@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">QEdit</string>
+    <string name="app_name_full">QEdit (编辑器)</string>
+
+    <!--  -->
+    <string name="permission_internal">QEdit Internal Permission</string>
+
+    <!-- Titles -->
+    <string name="title_editor">QEdit - %1$s</string>
+    <string name="title_editor_dirty">QEdit - %1$s *</string>
+    <string name="title_editor_readonly">QEdit - [%1$s]</string>
+    <string name="title_save_as">QEdit - 另存为 ... </string>
+    <string name="title_open_recent">QEdit - 最近编辑</string>
+    <string name="title_settings">QEdit - 设置 </string>
+    <string name="title_about">QEdit - 关于 ... </string>
+    <string name="title_font">QEdit - Text Font </string>
+    <string name="title_open">QEdit - 打开文件</string>
+
+    <!-- Config screen strings -->
+    <string name="config_cat_display">显示</string>
+    <string name="config_cat_other">其他</string>
+    <string name="config_cat_save">保存</string>
+    <string name="config_cat_undo">取消</string>
+    <string name="config_cat_search">搜索</string>
+    <string name="config_cat_misc">杂项</string>
+    <string name="config_title_line_numbers">显示行数</string>
+    <string name="config_title_word_wrap">自动换行</string>
+    <string name="config_title_font">更改文本字体</string>
+    <string name="config_title_text_size">文字大小</string>
+    <string name="config_title_color_theme">颜色主题</string>
+    <string name="config_title_end_of_lines">行结束</string>
+    <string name="config_title_max_recent">最大保存最近文件数</string>
+    <string name="config_title_search_wrap">搜索换行</string>
+    <string name="config_title_search_match_case">搜索匹配大小</string>
+    <string name="config_title_encoding">编码</string>
+    <string name="config_title_scroll_fling">Fling to scroll faster</string>
+    <string name="config_title_allow_undo_stack">Allow undo</string>
+    <string name="config_title_max_undo_stack">Maximum undo history</string>
+    <string name="config_title_back_to_undo">Use the back button to undo previous modifications</string>
+    <string name="config_title_use_home_page">Use a default file</string>
+    <string name="config_title_auto_save">自动保存</string>
+    <string name="config_title_auto_save_overwrite">覆盖已存在的文件</string>
+    <string name="config_summary_auto_save">Automatically saves the file being edited when the app goes in background</string>
+    <string name="config_summary_line_numbers">Display the line number at the left of the page</string>
+    <string name="config_summary_word_wrap">Lines will break in new lines if they are too wide for the screen</string>
+    <string name="config_summary_scroll_fling">Uncheck if you have performance issues</string>
+    <string name="config_summary_use_home_page">Select a file to open when you launch QEdit from your home screen</string>
+    <string name="config_summary_auto_save_overwrite_on">Auto save will overwrite existing files</string>
+    <string name="config_summary_auto_save_overwrite_off">Auto save will only work with new files</string>
+
+    <!-- Options Menu in QEdit -->
+    <string name="menu_new">新建</string>
+    <string name="menu_open">打开</string>
+    <string name="menu_open_recent">最近编辑</string>
+    <string name="menu_save">保存</string>
+    <string name="menu_save_as">另存为</string>
+    <string name="menu_settings">设置</string>
+    <string name="menu_about">关于</string>
+    <string name="menu_search">搜索</string>
+    <string name="menu_undo">取消</string>
+    <string name="menu_quit">退出</string>
+
+    <!-- Misc UI strings -->
+    <string name="ui_save_text">"Do you want to save your document? \nAny unsaved changes will be lost. "</string>
+    <string name="ui_save">Save</string>
+    <string name="ui_delete">Delete</string>
+    <string name="ui_no_save">"Don't save"</string>
+    <string name="ui_cancel">Cancel</string>
+    <string name="ui_hint_file_name">File name</string>
+    <string name="ui_hint_search">Search</string>
+    <string name="ui_art_licence">Artistic Licence</string>
+    <string name="ui_history">History</string>
+    <string name="ui_force_read_only">Open as read only</string>
+
+    <!-- Misc Strings -->
+    <string name="lorem_ipsum">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas porttitor neque semper sem fermentum pretium. Sed pharetra dui faucibus massa malesuada in condimentum mi gravida."</string>
+    <string name="art_licence">"All icons for this app were created and belong to the author of the app : Xavier Gouchet (android@xgouchet.fr)."</string>
+
+    <string name="info_select">打开</string>
+    <string name="info_go">运行</string>
+    <string name="info_help">帮助</string>
+    <string name="info_recent">最近编辑的文件...</string>
+
+    <string name="cannot_edit">无法编辑</string>
+    <string name="cannot_save">无法保存</string>
+    <string name="cannot_empty">文件内容不能为空</string>
+
+    <string name="confirm_save">确认覆盖</string>
+
+</resources>
