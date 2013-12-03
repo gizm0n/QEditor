@@ -5,7 +5,6 @@ import java.util.regex.Pattern;
 
 import com.hipipal.texteditor.common.Constants;
 import com.hipipal.texteditor.common.Settings;
-import com.hipipal.texteditor.ui.view.ShaderEditor.OnTextChangedListener;
 
 import android.content.Context;
 import android.graphics.Canvas;
