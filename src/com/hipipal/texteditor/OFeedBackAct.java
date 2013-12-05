@@ -39,7 +39,7 @@ public class OFeedBackAct extends _ABaseAct {
         aboutText.setMovementMethod(LinkMovementMethod.getInstance());
         
         //initWidgetTabItem(4);
-        addActionBarItem(getActionBar()
+        addActionBarItem(getGDActionBar()
         		.newActionBarItem(NormalActionBarItem.class)
         		.setDrawable(new ActionBarDrawable(this, R.drawable.ic_about)), 0);
 

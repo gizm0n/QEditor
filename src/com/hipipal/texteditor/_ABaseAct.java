@@ -29,35 +29,35 @@ public class _ABaseAct extends GDBase {
 
 	@SuppressLint("NewApi")
 	protected void initWidgetTabItem(int flag) {
-		/*addActionBarItem(getActionBar()
+		/*addActionBarItem(getGDActionBar()
         		.newActionBarItem(NormalActionBarItem.class)
         		.setDrawable(new ActionBarDrawable(this, R.drawable.ic_save_as)), 10);*/
 		
 		String code = NAction.getCode(getApplicationContext());
 		if (code.equals("qpyplus") || code.equals("qpy3")) {
-			addActionBarItem(getActionBar()
+			addActionBarItem(getGDActionBar()
 		        		.newActionBarItem(NormalActionBarItem.class)
 		        		.setDrawable(new ActionBarDrawable(this, R.drawable.ic_local)), 20);
 
 			
-		    addActionBarItem(getActionBar()
+		    addActionBarItem(getGDActionBar()
 		        		.newActionBarItem(NormalActionBarItem.class)
 		        		.setDrawable(new ActionBarDrawable(this, R.drawable.ic_new_a)), 30);
 		    
 		} else if (code.equals("texteditor")) {
 			if (flag == 0) {
-				addActionBarItem(getActionBar()
+				addActionBarItem(getGDActionBar()
 		        		.newActionBarItem(NormalActionBarItem.class)
 		        		.setDrawable(new ActionBarDrawable(this, R.drawable.ic_local)), 20);
-			    addActionBarItem(getActionBar()
+			    addActionBarItem(getGDActionBar()
 		        		.newActionBarItem(NormalActionBarItem.class)
 		        		.setDrawable(new ActionBarDrawable(this, R.drawable.ic_new_a)), 30);
 			}
-		    addActionBarItem(getActionBar()
+		    addActionBarItem(getGDActionBar()
 	        		.newActionBarItem(NormalActionBarItem.class)
 	        		.setDrawable(new ActionBarDrawable(this, R.drawable.ic_action_overflow)), 40);
 		} else {
-			addActionBarItem(getActionBar()
+			addActionBarItem(getGDActionBar()
 	        		.newActionBarItem(NormalActionBarItem.class)
 	        		.setDrawable(new ActionBarDrawable(this, R.drawable.ic_save_as)), 10);
 		}
