@@ -25,6 +25,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -242,7 +243,8 @@ public class TedLocalActivity extends _ABaseAct implements Constants {
         mBarT = new QuickActionBar(this);
         mBarT.addQuickAction(new MyQuickAction(this, R.drawable.ic_delete, R.string.info_delete));
         mBarT.addQuickAction(new MyQuickAction(this, R.drawable.ic_edit_b, R.string.info_rename));
-
+        mBarT.addQuickAction(new MyQuickAction(this, R.drawable.ic_menu_share_holo_light, R.string.share));
+        
         mBarT.setOnQuickActionClickListener(mActionListener);
     }
     private OnQuickActionClickListener mActionListener = new OnQuickActionClickListener() {
@@ -256,7 +258,9 @@ public class TedLocalActivity extends _ABaseAct implements Constants {
         		case 1:
         			renameItem(curTextItem);
         	    	//infoOpen(curTextItem, 0);
-
+        			break;
+        		case 2:
+        			shareFile();
         			break;
         		case 3:
                     break;
@@ -415,7 +419,6 @@ public class TedLocalActivity extends _ABaseAct implements Constants {
     @SuppressWarnings("deprecation")
 	public void deleteCurItem() {
     	Object o1 = curTextItem.getTag(1);
-    	    	
     	final String filename = o1.toString();
 		WBase.setTxtDialogParam(R.drawable.alert_dialog_icon, R.string.confirm_delete, new DialogInterface.OnClickListener() {
 			@Override
@@ -432,6 +435,21 @@ public class TedLocalActivity extends _ABaseAct implements Constants {
 			});
 			showDialog(_WBase.DIALOG_YES_NO_MESSAGE+dialogIndex);
 			dialogIndex++;
+    }
+    
+    public void shareFile() {
+    	Object o1 = curTextItem.getTag(1);
+    	String filename = o1.toString();
+    	File file = new File(filename);
+    	if (file.isFile()) {
+    		Intent sendIntent = new Intent();
+        	sendIntent.setAction(Intent.ACTION_SEND);
+        	sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+        	sendIntent.setType("text/plain");
+        	startActivity(sendIntent);
+    	} else {
+    		Toast.makeText(getApplicationContext(), "Not a file", Toast.LENGTH_SHORT).show();
+    	}
     }
     
 	protected boolean setOpenResult(File file) {
