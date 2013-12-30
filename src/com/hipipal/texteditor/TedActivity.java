@@ -1262,9 +1262,25 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		}
 	}
 	public void onRight(View v) {
-		int index = mEditor.getSelectionStart();
+		int startSelection= mEditor.getSelectionStart();
+		int endSelection=mEditor.getSelectionEnd();
+		String selectedText = mEditor.getText().toString().substring(startSelection, endSelection);
 		Editable editable = mEditor.getText();
-		editable.insert(index, "    ");
+		if(selectedText.length() != 0){
+			String startData = mEditor.getText().toString();
+			String textData = startData.substring(0, startSelection); 
+			if(textData.contains("\n")){
+				int newLineIndex = textData.lastIndexOf("\n");
+				editable.replace(newLineIndex, newLineIndex, "\n    ");
+			}else{
+				editable.insert(0, "    ");
+			}
+			String indentedText = selectedText.replace("\n", "\n    ");
+			editable.replace(startSelection, endSelection, indentedText);
+		}else{
+			int index = mEditor.getSelectionStart();
+			editable.insert(index, "    ");
+		}
 	}
 	
 	public void onBack(View v) {
