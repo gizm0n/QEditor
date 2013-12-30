@@ -109,5 +109,6 @@
 
 	<string name="support_intro">It\'s not Python / HTML file</string>
 	<string name="pls_install_ext_plg">Please install the QPython Plugin</string>
+	<string name="find">find</string>
 
 </resources>

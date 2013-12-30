@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/findText"
+        android:icon="@drawable/ic_action_search"
+		android:showAsAction="always"
+        android:title="@string/find"/>
+    <item
+        android:id="@+id/shareText"
+        android:icon="@drawable/ic_menu_share"
+        android:showAsAction="always"
+        android:title="@string/share"/>
+
+</menu>

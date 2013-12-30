@@ -32,12 +32,15 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -63,6 +66,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	/**
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (BuildConfig.DEBUG)
@@ -92,6 +96,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 
 		// editor
 		mEditor = (AdvancedEditText) findViewById(R.id.editor);
+		mEditor.setCustomSelectionActionModeCallback(new ActionBarCallBack());
 		// log output
 		//mLogField = (AdvancedEditText) findViewById(R.id.output_log);
 		//mLogField.setVisibility(View.GONE);
@@ -118,6 +123,75 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 
 		
 	}
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	class ActionBarCallBack implements ActionMode.Callback
+	{
+
+
+		@Override
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item)
+		{			
+			// TODO Auto-generated method stub
+			switch (item.getItemId())
+			{
+				case R.id.shareText:
+					shareData();
+				case R.id.findText:
+					setSearch();
+					return true;
+			}
+			return false;
+		}
+		public void shareData()
+		{
+			EditText et=(EditText)findViewById(R.id.editor);
+			int startSelection=et.getSelectionStart();
+			int endSelection=et.getSelectionEnd();
+			String selectedText = et.getText().toString().substring(startSelection, endSelection); 
+			
+			Intent sendIntent = new Intent();
+			sendIntent.setAction(Intent.ACTION_SEND);
+			sendIntent.putExtra(Intent.EXTRA_TEXT, selectedText);
+			sendIntent.setType("text/plain");
+			startActivity(sendIntent);
+			//Toast.makeText(getApplicationContext(), selectedText, Toast.LENGTH_SHORT).show();
+		}
+		public void setSearch(){
+			search();
+			
+			EditText et=(EditText)findViewById(R.id.editor);
+			int startSelection=et.getSelectionStart();
+			int endSelection=et.getSelectionEnd();
+			String selectedText = et.getText().toString().substring(startSelection, endSelection); 
+			mSearchInput.setText(selectedText);
+		}
+
+		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+		@Override
+		public boolean onCreateActionMode(ActionMode mode, Menu menu)
+		{
+			// TODO Auto-generated method stub
+			mode.getMenuInflater().inflate(R.menu.action_bar_menu, menu);
+			//menu.add(0, 1, 0, "Info");
+			return true;
+		}
+
+		@Override
+		public void onDestroyActionMode(ActionMode mode)
+		{
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public boolean onPrepareActionMode(ActionMode mode, Menu menu)
+		{
+			// TODO Auto-generated method stub
+
+			return false;
+		}
+	}
+
 
     @Override
     public int createLayout() {
