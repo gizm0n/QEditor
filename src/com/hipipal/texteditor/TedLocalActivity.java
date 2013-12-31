@@ -442,6 +442,7 @@ public class TedLocalActivity extends _ABaseAct implements Constants {
     	String filename = o1.toString();
     	File file = new File(filename);
     	if (file.isFile()) {
+    		// Not filtering for share file intent 
     		Intent sendIntent = new Intent(Intent.ACTION_SEND);
     		sendIntent.setType("text/plain");
         	sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
