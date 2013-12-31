@@ -132,13 +132,14 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item)
 		{			
 			// TODO Auto-generated method stub
-			switch (item.getItemId())
+			switch(item.getItemId())
 			{
 				case R.id.shareText:
 					shareData();
+					break;
 				case R.id.findText:
 					setSearch();
-					return true;
+					break;
 			}
 			return false;
 		}
