@@ -132,11 +132,10 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item)
 		{			
 			// TODO Auto-generated method stub
-			switch (item.getItemId())
+			if (item.getItemId() ==R.id.shareText)
 			{
-				case R.id.shareText:
 					shareData();
-				case R.id.findText:
+			} else if (item.getItemId() == R.id.findText) {
 					setSearch();
 					return true;
 			}
@@ -737,6 +736,13 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 					mEditor.setEnabled(false);
 				}
 
+				if (mCurrentFilePath!=null && mCurrentFilePath.endsWith(".py")) {
+					mEditor.updateFromSettings("py");
+				} else {
+					mEditor.updateFromSettings("");
+
+				}
+
 				updateTitle();
 
 				return true;
@@ -831,6 +837,13 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		mReadOnly = false;
 		mDirty = false;
 		updateTitle();
+		if (mCurrentFilePath!=null && mCurrentFilePath.endsWith(".py")) {
+			mEditor.updateFromSettings("py");
+		} else {
+			mEditor.updateFromSettings("");
+
+		}
+
 		//Crouton.showText(this, R.string.toast_save_success, Style.CONFIRM);
 		if (show) Toast.makeText(getApplicationContext(), R.string.toast_save_success, Toast.LENGTH_SHORT).show();
 

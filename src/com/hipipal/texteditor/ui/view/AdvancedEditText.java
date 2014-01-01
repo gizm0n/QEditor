@@ -43,6 +43,7 @@ public class AdvancedEditText extends EditText implements Constants,
 	
 	String fileType = null;
 
+	Boolean isWatch = true;
 	/**
 	 * @param context
 	 *            the current context
@@ -73,6 +74,9 @@ public class AdvancedEditText extends EditText implements Constants,
 		
 	}
 
+	public void setFileType(String ft) {
+		fileType = ft;
+	}
 	/**
 	 * @see android.widget.TextView#computeScroll()
 	 * @category View
@@ -243,6 +247,7 @@ public class AdvancedEditText extends EditText implements Constants,
 	 * @category Custom
 	 */
 	public void updateFromSettings(String fileType) {
+		Log.d(TAG, "updateFromSettings:"+fileType);
 
 		if (isInEditMode()) {
 			return;
@@ -313,12 +318,17 @@ public class AdvancedEditText extends EditText implements Constants,
 		} else if (fileType!=null && !fileType.equals("")) {*/
 			//this.fileType = fileType;
 		//Log.d(TAG, "fileType:"+fileType);
-
-			//if (fileType.equals("py")) {
-				//Log.d(TAG, "init");
-
-				init();
-			//}
+		Log.d(TAG, "init");
+		if (fileType.equals("py")) {
+			//Log.d(TAG, "init OK");
+			isWatch = true;
+			init();
+			refresh();
+		} else {
+			isWatch = false;
+			cancelUpdate();
+			unHightlight();
+		}
 		//}
 	}
 
@@ -495,6 +505,10 @@ public class AdvancedEditText extends EditText implements Constants,
 	{
 		highlightWithoutChange( getText() );
 	}
+	
+	public void unHightlight() {
+		unHightWithoutChange( getText() );
+	}
 
 	private void init()
 	{
@@ -557,15 +571,17 @@ public class AdvancedEditText extends EditText implements Constants,
 				@Override
 				public void afterTextChanged( Editable e )
 				{
-					cancelUpdate();
-
-					if( !modified )
-						return;
-
-					dirty = true;
-					updateHandler.postDelayed(
-						updateRunnable,
-						updateDelay );
+					if (isWatch) {
+						cancelUpdate();
+	
+						if( !modified )
+							return;
+	
+						dirty = true;
+						updateHandler.postDelayed(
+							updateRunnable,
+							updateDelay );
+					}
 				}
 			} );
 	}
@@ -580,6 +596,14 @@ public class AdvancedEditText extends EditText implements Constants,
 		modified = false;
 		highlight( e );
 		modified = true;
+	}
+
+	public void unHightWithoutChange(Editable e) {
+		Log.d(TAG, "unHightWithoutChange");
+		modified = false;
+		clearSpans(e);
+		modified = true;
+
 	}
 
 	private Editable highlight( Editable e )
