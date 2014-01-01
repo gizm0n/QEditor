@@ -16,7 +16,6 @@ import android.graphics.Typeface;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.InputFilter;
-import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextWatcher;

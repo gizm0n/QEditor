@@ -1286,6 +1286,16 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	}
 	
 	public void onLeft(View v) {
+		leftIndent();
+//		int index = mEditor.getSelectionStart();
+//		Editable editable = mEditor.getText();
+//		if (index>=4) {
+//			if (editable.subSequence(index -4, index).toString().equals("    ")) {
+//				editable.delete(index-4, index);
+//			}
+//		}
+	}
+	public void leftIndent(){
 		int index = mEditor.getSelectionStart();
 		Editable editable = mEditor.getText();
 		if (index>=4) {
@@ -1295,6 +1305,29 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		}
 	}
 	public void onRight(View v) {
+		rightIndnent();
+//		int startSelection= mEditor.getSelectionStart();
+//		int endSelection=mEditor.getSelectionEnd();
+//		String selectedText = mEditor.getText().toString().substring(startSelection, endSelection);
+//		Editable editable = mEditor.getText();
+//		if(selectedText.length() != 0){
+//			String startData = mEditor.getText().toString();
+//			String textData = startData.substring(0, startSelection); 
+//			if(textData.contains("\n")){
+//				int newLineIndex = textData.lastIndexOf("\n");
+//				editable.replace(newLineIndex, newLineIndex, "\n    ");
+//			}else{
+//				editable.insert(0, "    ");
+//			}
+//			String indentedText = selectedText.replace("\n", "\n    ");
+//			editable.replace(startSelection, endSelection, indentedText);
+//		}else{
+//			int index = mEditor.getSelectionStart();
+//			editable.insert(index, "    ");
+//		}
+	}
+	
+	public void rightIndnent(){
 		int startSelection= mEditor.getSelectionStart();
 		int endSelection=mEditor.getSelectionEnd();
 		String selectedText = mEditor.getText().toString().substring(startSelection, endSelection);
@@ -1315,7 +1348,6 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 			editable.insert(index, "    ");
 		}
 	}
-	
 	@Override
 	public void onBack(View v) {
 		if (!undo()) {
@@ -1434,6 +1466,12 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 				break;
 			case KeyEvent.KEYCODE_Z:
 				undo();
+				break;
+			case KeyEvent.KEYCODE_LEFT_BRACKET:
+				leftIndent();
+				break;
+			case KeyEvent.KEYCODE_RIGHT_BRACKET:
+				rightIndnent();
 				break;
 			default:
 				break;
