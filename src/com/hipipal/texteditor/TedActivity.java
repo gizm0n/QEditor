@@ -1356,6 +1356,27 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		}
 	}
 	public void onPlay(View v) {
+		runScript();
+//		String content = mEditor.getText().toString().trim();
+//		if (content.length() == 0) {
+//			Toast.makeText(getApplicationContext(), R.string.cannot_empty, Toast.LENGTH_SHORT).show();
+//		} else {
+//			if (content.startsWith("<")) {
+//				//doAutoSaveFile(false);
+//				doSaveFile(mCurrentFilePath, false);
+//
+//				Intent intent = new Intent(getApplicationContext(), MTubebook.class);
+//				Uri data = Uri.fromFile(new File(mCurrentFilePath));
+//				intent.setData(data);
+//				startActivity(intent);
+//
+//	
+//			} else {
+//				callPyApi("qedit",mCurrentFilePath,content);
+//			}
+//		}
+	}
+	public void runScript(){
 		String content = mEditor.getText().toString().trim();
 		if (content.length() == 0) {
 			Toast.makeText(getApplicationContext(), R.string.cannot_empty, Toast.LENGTH_SHORT).show();
@@ -1472,6 +1493,9 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 				break;
 			case KeyEvent.KEYCODE_RIGHT_BRACKET:
 				rightIndnent();
+				break;
+			case KeyEvent.KEYCODE_R:
+				runScript();
 				break;
 			default:
 				break;
