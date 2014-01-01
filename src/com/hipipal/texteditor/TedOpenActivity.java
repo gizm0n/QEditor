@@ -18,6 +18,7 @@ public class TedOpenActivity extends BrowsingActivity implements
 	/**
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		int request;
@@ -56,6 +57,7 @@ public class TedOpenActivity extends BrowsingActivity implements
 	/**
 	 * @see Activity#onKeyUp(int, KeyEvent)
 	 */
+	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
 			// navigate to parent folder
@@ -74,6 +76,7 @@ public class TedOpenActivity extends BrowsingActivity implements
 	/**
 	 * @see android.view.View.OnClickListener#onClick(android.view.View)
 	 */
+	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.buttonCancel) {
 			setResult(RESULT_CANCELED);
@@ -84,6 +87,7 @@ public class TedOpenActivity extends BrowsingActivity implements
 	/**
 	 * @see fr.xgouchet.androidlib.ui.activity.BrowserActivity#onFolderClick(java.io.File)
 	 */
+	@Override
 	protected boolean onFolderClick(File folder) {
 		return true;
 	}
@@ -91,6 +95,7 @@ public class TedOpenActivity extends BrowsingActivity implements
 	/**
 	 * @see fr.xgouchet.androidlib.ui.activity.BrowsingActivity#onFolderViewFilled()
 	 */
+	@Override
 	protected void onFolderViewFilled() {
 
 	}
@@ -98,6 +103,7 @@ public class TedOpenActivity extends BrowsingActivity implements
 	/**
 	 * @see fr.xgouchet.androidlib.ui.activity.BrowserActivity#onFileClick(java.io.File)
 	 */
+	@Override
 	protected void onFileClick(File file) {
 		if (setOpenResult(file))
 			finish();

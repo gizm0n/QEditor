@@ -34,6 +34,7 @@ public class FontListAdapter extends FileListAdapter {
 	 * @see fr.xgouchet.androidlib.ui.adapter.FileListAdapter#getView(int,
 	 *      android.view.View, android.view.ViewGroup)
 	 */
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = super.getView(position, convertView, parent);
 

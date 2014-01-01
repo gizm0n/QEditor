@@ -14,6 +14,7 @@ public class ComparatorFilesAlpha implements Comparator<File> {
 	/**
 	 * @see Comparator#compare(Object, Object)
 	 */
+	@Override
 	public int compare(File file1, File file2) {
 		// sort folders first
 		if ((file1.isDirectory()) && (!file2.isDirectory()))

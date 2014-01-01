@@ -104,7 +104,7 @@ public class MTubebook extends _ABaseAct implements OnTouchListener, Handler.Cal
 
 		LinearLayout bBar = (LinearLayout)findViewById(R.id.return_bar_box);
 
-		String act = getIntent().getStringExtra(CONF.EXTRA_CONTENT_URL1);
+		String act = getIntent().getStringExtra(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL1);
     	EditText termT = (EditText)findViewById(R.id.url_input);
     	if (termT!=null) {
     		termT.setOnTouchListener(new RightDrawableOnTouchListener(termT) {
@@ -120,7 +120,7 @@ public class MTubebook extends _ABaseAct implements OnTouchListener, Handler.Cal
 			bBar.setVisibility(View.GONE);
 			//initAD(TAG);
 		
-			String term = getIntent().getStringExtra(CONF.EXTRA_CONTENT_URL2);
+			String term = getIntent().getStringExtra(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL2);
 	    	termT.setText(term);
 	    	doSearch(null);
 	    	
@@ -157,12 +157,12 @@ public class MTubebook extends _ABaseAct implements OnTouchListener, Handler.Cal
 	    		
 	    			int q = NAction.getUpdateQ(getApplicationContext());
 	    			if (q==0) {
-	    				q = CONF.UPDATEQ;
+	    				q = com.zuowuxuxi.config.CONF.UPDATEQ;
 	    			}
 	    			if ((now-lastCheck)>=q) {	// 每q小时检查一次更新/清空一下不必要的cache
 	    				checkUpdate(getApplicationContext(), true);
 	    				// 清空图片目录的缓存
-	    	    		String cacheDir = Environment.getExternalStorageDirectory()+"/"+CONF.BASE_PATH+"/"+CONF.DCACHE+"/";
+	    	    		String cacheDir = Environment.getExternalStorageDirectory()+"/"+CONF.BASE_PATH+"/"+com.zuowuxuxi.config.CONF.DCACHE+"/";
 	    				FileHelper.clearDir(cacheDir, 0, false);
 	    				
 	    				// 清理DB缓存
@@ -173,7 +173,7 @@ public class MTubebook extends _ABaseAct implements OnTouchListener, Handler.Cal
 		}    	
 
 		// display input
-    	View tl = (View)findViewById(R.id.topline);
+    	View tl = findViewById(R.id.topline);
     	tl.setVisibility(View.GONE);
     	
     	//EditText termT = (EditText)findViewById(R.id.url_input);
@@ -184,8 +184,8 @@ public class MTubebook extends _ABaseAct implements OnTouchListener, Handler.Cal
 
     	startWV();
     	
-    	String sAct = getIntent().getStringExtra(CONF.EXTRA_CONTENT_URL1);
-    	String term = getIntent().getStringExtra(CONF.EXTRA_CONTENT_URL2);
+    	String sAct = getIntent().getStringExtra(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL1);
+    	String term = getIntent().getStringExtra(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL2);
 		final EditText searchInput = (EditText)findViewById(R.id.url_input);
 
 		if (searchInput!=null) {
@@ -212,7 +212,8 @@ public class MTubebook extends _ABaseAct implements OnTouchListener, Handler.Cal
 		registerReceiver(playOrDownloadReceiver, filter);
     }
     
-    public void onDestroy() {
+    @Override
+	public void onDestroy() {
     	super.onDestroy();
     	unregisterReceiver(playOrDownloadReceiver);
     }
@@ -226,7 +227,8 @@ public class MTubebook extends _ABaseAct implements OnTouchListener, Handler.Cal
 
 	    		final String searchUrl = CONF.VIDEO_GW_SEARCH_URL+str2;
 	        	NRequest.get2(getApplicationContext(), searchUrl, null, new AsyncHttpResponseHandler() {
-	                @SuppressWarnings("deprecation")
+	                @Override
+					@SuppressWarnings("deprecation")
 					public void onSuccess(String response) {
 	                	closeWaitWindow();
 
@@ -307,8 +309,8 @@ public class MTubebook extends _ABaseAct implements OnTouchListener, Handler.Cal
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			Log.d(TAG, "downloadReceiver");
-			String act = intent.getExtras().getString(CONF.EXTRA_CONTENT_URL1);
-			String url = intent.getExtras().getString(CONF.EXTRA_CONTENT_URL2);
+			String act = intent.getExtras().getString(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL1);
+			String url = intent.getExtras().getString(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL2);
 
 			if (act.equals("play")) {
 				playFromRemote(url);
@@ -319,8 +321,8 @@ public class MTubebook extends _ABaseAct implements OnTouchListener, Handler.Cal
 			} else if (act.equals("installqpylib")) {
 				
 			} else {
-				String title = intent.getExtras().getString(CONF.EXTRA_CONTENT_URL3);
-				String cat = intent.getExtras().getString(CONF.EXTRA_CONTENT_URL4);
+				String title = intent.getExtras().getString(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL3);
+				String cat = intent.getExtras().getString(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL4);
 	
 		    	downloadReceiver(title, url, cat);
 			}
@@ -336,7 +338,7 @@ public class MTubebook extends _ABaseAct implements OnTouchListener, Handler.Cal
 		String xx = "."+FileHelper.getExt(FileHelper.getFileName(NUtil.getPathFromUrl(addr)), "mp4");
 		try {
 			if (root.equals("")) {
-				targetFile = new File(FileHelper.getBasePath(CONF.BASE_PATH, CONF.DFROM_LOCAL), cat+"/"+title+xx);
+				targetFile = new File(FileHelper.getBasePath(CONF.BASE_PATH, com.zuowuxuxi.config.CONF.DFROM_LOCAL), cat+"/"+title+xx);
 	
 			} else {
 				targetFile = new File(FileHelper.getABSPath(root+"/"+cat+"/"), title+xx);

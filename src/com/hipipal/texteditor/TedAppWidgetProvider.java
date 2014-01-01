@@ -22,6 +22,7 @@ public class TedAppWidgetProvider extends AppWidgetProvider implements Constants
 	 * @see android.appwidget.AppWidgetProvider#onUpdate(android.content.Context,
 	 *      android.appwidget.AppWidgetManager, int[])
 	 */
+	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
 		AppWidgetManager manager;
@@ -43,6 +44,7 @@ public class TedAppWidgetProvider extends AppWidgetProvider implements Constants
 	 * @see android.appwidget.AppWidgetProvider#onDeleted(android.content.Context,
 	 *      int[])
 	 */
+	@Override
 	public void onDeleted(Context context, int[] appWidgetIds) {
 
 		for (int widgetId : appWidgetIds) {

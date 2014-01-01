@@ -33,6 +33,7 @@ public class PathListAdapter extends ArrayAdapter<String> {
 	/**
 	 * @see ArrayAdapter#getView(int, View, ViewGroup)
 	 */
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v;
 		String path;

@@ -100,8 +100,8 @@ public class OFeedBackAct extends _ABaseAct {
             	closeWaitWindow();
 				JSONObject act_response;
 				try {
-					act_response = (JSONObject)result.getJSONObject("ACT_RESPONSE");
-					String act_stat = (String)act_response.getString("stat");
+					act_response = result.getJSONObject("ACT_RESPONSE");
+					String act_stat = act_response.getString("stat");
 					
 					if (act_stat.equals("ok")) {
 		    			Toast.makeText(getApplicationContext(), R.string.feedback_ok, Toast.LENGTH_SHORT).show(); 
@@ -113,7 +113,7 @@ public class OFeedBackAct extends _ABaseAct {
 	                    startActivity(intent0);
 		    			*/
 					} else {
-						String info = (String)act_response.getString("info");
+						String info = act_response.getString("info");
 		    			Toast.makeText(getApplicationContext(), getString(R.string.form_failed)+info, Toast.LENGTH_SHORT).show(); 
 
 					}
@@ -122,7 +122,8 @@ public class OFeedBackAct extends _ABaseAct {
 				}
 
             }
-            public void onFailure(Throwable error) {
+            @Override
+			public void onFailure(Throwable error) {
             	closeWaitWindow();
     			Toast.makeText(getApplicationContext(), getString(R.string.form_exception)+error.getMessage(), Toast.LENGTH_SHORT).show(); 
             }

@@ -122,7 +122,7 @@ public class MSettingAct extends _ABaseAct {
 
 
     public void onPyLib(View v) {
-    	String extPlgPlusName = CONF.EXT_PLG_PLUS;
+    	String extPlgPlusName = com.zuowuxuxi.config.CONF.EXT_PLG_PLUS;
 
 		String localPlugin = this.getPackageName();
 		Intent intent = new Intent();

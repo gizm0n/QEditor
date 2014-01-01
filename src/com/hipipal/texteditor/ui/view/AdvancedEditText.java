@@ -81,6 +81,7 @@ public class AdvancedEditText extends EditText implements Constants,
 	 * @see android.widget.TextView#computeScroll()
 	 * @category View
 	 */
+	@Override
 	public void computeScroll() {
 
 		if (mTedScroller != null) {
@@ -96,6 +97,7 @@ public class AdvancedEditText extends EditText implements Constants,
 	 * @see EditText#onDraw(Canvas)
 	 * @category View
 	 */
+	@Override
 	public void onDraw(Canvas canvas) {
 		int count, padding, lineX, baseline;
 
@@ -161,6 +163,7 @@ public class AdvancedEditText extends EditText implements Constants,
 	 * @see android.view.View.OnKeyListener#onKey(android.view.View, int,
 	 *      android.view.KeyEvent)
 	 */
+	@Override
 	public boolean onKey(View v, int keyCode, KeyEvent event) {
 		return false;
 	}
@@ -169,6 +172,7 @@ public class AdvancedEditText extends EditText implements Constants,
 	 * @see android.widget.TextView#onTouchEvent(android.view.MotionEvent)
 	 * @category GestureDetection
 	 */
+	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 
 		super.onTouchEvent(event);
@@ -183,6 +187,7 @@ public class AdvancedEditText extends EditText implements Constants,
 	 * @see android.view.GestureDetector.OnGestureListener#onDown(android.view.MotionEvent)
 	 * @category GestureDetection
 	 */
+	@Override
 	public boolean onDown(MotionEvent e) {
 		return true;
 	}
@@ -191,6 +196,7 @@ public class AdvancedEditText extends EditText implements Constants,
 	 * @see android.view.GestureDetector.OnGestureListener#onSingleTapUp(android.view.MotionEvent)
 	 * @category GestureDetection
 	 */
+	@Override
 	public boolean onSingleTapUp(MotionEvent e) {
 		if (isEnabled()) {
 			((InputMethodManager) getContext().getSystemService(
@@ -204,12 +210,14 @@ public class AdvancedEditText extends EditText implements Constants,
 	 * @see android.view.GestureDetector.OnGestureListener#onShowPress(android.view.MotionEvent)
 	 * @category GestureDetection
 	 */
+	@Override
 	public void onShowPress(MotionEvent e) {
 	}
 
 	/**
 	 * @see android.view.GestureDetector.OnGestureListener#onLongPress(android.view.MotionEvent)
 	 */
+	@Override
 	public void onLongPress(MotionEvent e) {
 
 	}
@@ -218,6 +226,7 @@ public class AdvancedEditText extends EditText implements Constants,
 	 * @see android.view.GestureDetector.OnGestureListener#onScroll(android.view.MotionEvent,
 	 *      android.view.MotionEvent, float, float)
 	 */
+	@Override
 	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
 			float distanceY) {
 		// mTedScroller.setFriction(0);
@@ -228,6 +237,7 @@ public class AdvancedEditText extends EditText implements Constants,
 	 * @see android.view.GestureDetector.OnGestureListener#onFling(android.view.MotionEvent,
 	 *      android.view.MotionEvent, float, float)
 	 */
+	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 			float velocityY) {
 		if (!Settings.FLING_TO_SCROLL) {
@@ -628,7 +638,7 @@ public class AdvancedEditText extends EditText implements Constants,
 					new BackgroundColorSpan( COLOR_ERROR ),
 					m.start(),
 					m.end(),
-					Spannable.SPAN_EXCLUSIVE_EXCLUSIVE );
+					Spanned.SPAN_EXCLUSIVE_EXCLUSIVE );
 			}
 
 			for( Matcher m = numbers.matcher( e );
@@ -637,7 +647,7 @@ public class AdvancedEditText extends EditText implements Constants,
 					new ForegroundColorSpan( COLOR_NUMBER ),
 					m.start(),
 					m.end(),
-					Spannable.SPAN_EXCLUSIVE_EXCLUSIVE );
+					Spanned.SPAN_EXCLUSIVE_EXCLUSIVE );
 
 			for( Matcher m = keywords.matcher( e );
 				m.find(); )
@@ -645,7 +655,7 @@ public class AdvancedEditText extends EditText implements Constants,
 					new ForegroundColorSpan( COLOR_KEYWORD ),
 					m.start(),
 					m.end(),
-					Spannable.SPAN_EXCLUSIVE_EXCLUSIVE );
+					Spanned.SPAN_EXCLUSIVE_EXCLUSIVE );
 
 			for( Matcher m = builtins.matcher( e );
 				m.find(); )
@@ -653,7 +663,7 @@ public class AdvancedEditText extends EditText implements Constants,
 					new ForegroundColorSpan( COLOR_BUILTIN ),
 					m.start(),
 					m.end(),
-					Spannable.SPAN_EXCLUSIVE_EXCLUSIVE );
+					Spanned.SPAN_EXCLUSIVE_EXCLUSIVE );
 
 			for( Matcher m = comments.matcher( e );
 				m.find(); )
@@ -661,7 +671,7 @@ public class AdvancedEditText extends EditText implements Constants,
 					new ForegroundColorSpan( COLOR_COMMENT ),
 					m.start(),
 					m.end(),
-					Spannable.SPAN_EXCLUSIVE_EXCLUSIVE );
+					Spanned.SPAN_EXCLUSIVE_EXCLUSIVE );
 		}
 		catch( Exception ex )
 		{

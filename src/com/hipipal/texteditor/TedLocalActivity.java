@@ -248,7 +248,8 @@ public class TedLocalActivity extends _ABaseAct implements Constants {
         mBarT.setOnQuickActionClickListener(mActionListener);
     }
     private OnQuickActionClickListener mActionListener = new OnQuickActionClickListener() {
-        public void onQuickActionClicked(QuickActionWidget widget, int position) {
+        @Override
+		public void onQuickActionClicked(QuickActionWidget widget, int position) {
         	switch (position) {
 	        	case 0:
 
@@ -533,7 +534,8 @@ public class TedLocalActivity extends _ABaseAct implements Constants {
     	}
     }
     
-    public void onBack(View v) {
+    @Override
+	public void onBack(View v) {
     	finish();
     }
     

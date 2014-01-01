@@ -8,6 +8,7 @@ public class TedChangelog extends ChangeLog {
 	/**
 	 * @see fr.xgouchet.androidlib.common.ChangeLog#getTitleResourceForVersion(int)
 	 */
+	@Override
 	public int getTitleResourceForVersion(int version) {
 		int res = 0;
 		switch (version) {
@@ -21,6 +22,7 @@ public class TedChangelog extends ChangeLog {
 	/**
 	 * @see fr.xgouchet.androidlib.common.ChangeLog#getChangeLogResourceForVersion(int)
 	 */
+	@Override
 	public int getChangeLogResourceForVersion(int version) {
 		int res = 0;
 		switch (version) {

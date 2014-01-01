@@ -20,6 +20,7 @@ public class TedSaveAsActivity extends BrowsingActivity implements Constants, On
 	/**
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -42,6 +43,7 @@ public class TedSaveAsActivity extends BrowsingActivity implements Constants, On
 	/**
 	 * @see android.view.View.OnClickListener#onClick(android.view.View)
 	 */
+	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.buttonCancel) {
 			setResult(RESULT_CANCELED);
@@ -55,6 +57,7 @@ public class TedSaveAsActivity extends BrowsingActivity implements Constants, On
 	/**
 	 * @see fr.xgouchet.androidlib.ui.activity.BrowserActivity#onFileClick(java.io.File)
 	 */
+	@Override
 	protected void onFileClick(File file) {
 		if (file.canWrite())
 			mFileName.setText(file.getName());
@@ -63,6 +66,7 @@ public class TedSaveAsActivity extends BrowsingActivity implements Constants, On
 	/**
 	 * @see fr.xgouchet.androidlib.ui.activity.BrowserActivity#onFolderClick(java.io.File)
 	 */
+	@Override
 	protected boolean onFolderClick(File folder) {
 		return true;
 	}
@@ -70,6 +74,7 @@ public class TedSaveAsActivity extends BrowsingActivity implements Constants, On
 	/**
 	 * @see fr.xgouchet.androidlib.ui.activity.BrowsingActivity#onFolderViewFilled()
 	 */
+	@Override
 	protected void onFolderViewFilled() {
 
 	}

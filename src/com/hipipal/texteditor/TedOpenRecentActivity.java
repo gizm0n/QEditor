@@ -30,6 +30,7 @@ public class TedOpenRecentActivity extends Activity implements Constants, OnClic
 	/**
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -49,6 +50,7 @@ public class TedOpenRecentActivity extends Activity implements Constants, OnClic
 	/**
 	 * @see android.app.Activity#onResume()
 	 */
+	@Override
 	protected void onResume() {
 		super.onResume();
 
@@ -59,6 +61,7 @@ public class TedOpenRecentActivity extends Activity implements Constants, OnClic
 	 * @see android.app.Activity#onCreateContextMenu(android.view.ContextMenu,
 	 *      android.view.View, android.view.ContextMenu.ContextMenuInfo)
 	 */
+	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
@@ -71,6 +74,7 @@ public class TedOpenRecentActivity extends Activity implements Constants, OnClic
 	/**
 	 * @see android.app.Activity#onContextItemSelected(android.view.MenuItem)
 	 */
+	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 
 		RecentFiles.removePath(mContextPath);
@@ -85,6 +89,7 @@ public class TedOpenRecentActivity extends Activity implements Constants, OnClic
 	/**
 	 * @see android.view.View.OnClickListener#onClick(android.view.View)
 	 */
+	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.buttonCancel) {
 			setResult(RESULT_CANCELED);
@@ -96,6 +101,7 @@ public class TedOpenRecentActivity extends Activity implements Constants, OnClic
 	 * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget.AdapterView,
 	 *      android.view.View, int, long)
 	 */
+	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		String path;
 

@@ -8,6 +8,7 @@ public class TedAboutActivity extends AboutActivity {
 	/**
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 

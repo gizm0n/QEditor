@@ -25,6 +25,7 @@ public class TextChangeInsert implements TextChange {
 	/**
 	 * @see com.hipipal.texteditor.undo.TextChange#getCaret()
 	 */
+	@Override
 	public int getCaret() {
 		if (mSequence.toString().contains(" "))
 			return -1;
@@ -36,6 +37,7 @@ public class TextChangeInsert implements TextChange {
 	/**
 	 * @see com.hipipal.texteditor.undo.TextChange#append(java.lang.CharSequence)
 	 */
+	@Override
 	public void append(CharSequence seq) {
 		mSequence.append(seq);
 	}
@@ -44,6 +46,7 @@ public class TextChangeInsert implements TextChange {
 	 * @see com.hipipal.texteditor.undo.TextChange#canMergeChangeBefore(java.lang.CharSequence,
 	 *      int, int, int)
 	 */
+	@Override
 	public boolean canMergeChangeBefore(CharSequence s, int start, int count, int after) {
 
 		CharSequence sub;
@@ -76,6 +79,7 @@ public class TextChangeInsert implements TextChange {
 	 * @see com.hipipal.texteditor.undo.TextChange#canMergeChangeAfter(java.lang.CharSequence,
 	 *      int, int, int)
 	 */
+	@Override
 	public boolean canMergeChangeAfter(CharSequence s, int start, int before, int count) {
 		CharSequence sub;
 		boolean append, replace;
@@ -107,6 +111,7 @@ public class TextChangeInsert implements TextChange {
 	/**
 	 * @see com.hipipal.texteditor.undo.TextChange#undo(java.lang.String)
 	 */
+	@Override
 	public int undo(Editable s) {
 		if (BuildConfig.DEBUG)
 			Log.i(TAG, "Undo Insert : deleting " + mStart + " to " + (mStart + mSequence.length()));
@@ -117,6 +122,7 @@ public class TextChangeInsert implements TextChange {
 	/**
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString() {
 		return "+\"" + mSequence.toString().replaceAll("\n", "~") + "\" @" + mStart;
 	}

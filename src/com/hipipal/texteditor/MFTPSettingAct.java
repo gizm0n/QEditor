@@ -62,7 +62,7 @@ public class MFTPSettingAct extends _ABaseAct {
         displayAccount();
         //
         Button ftpOpBtn = (Button)findViewById(R.id.ftp_op_btn);
-        if (FTPServerService.isRunning()) {
+        if (org.swiftp.FTPServerService.isRunning()) {
         	ftpOpBtn.setText(getString(R.string.ftp_stop));
         	
         } else {
@@ -70,9 +70,9 @@ public class MFTPSettingAct extends _ABaseAct {
 
         }
         IntentFilter filter = new IntentFilter();
-        filter.addAction(FTPServerService.ACTION_STARTED);
-        filter.addAction(FTPServerService.ACTION_STOPPED);
-        filter.addAction(FTPServerService.ACTION_FAILEDTOSTART);
+        filter.addAction(org.swiftp.FTPServerService.ACTION_STARTED);
+        filter.addAction(org.swiftp.FTPServerService.ACTION_STOPPED);
+        filter.addAction(org.swiftp.FTPServerService.ACTION_FAILEDTOSTART);
         registerReceiver(ftpServerReceiver, filter);
         
         MNApp mnApp = (MNApp) this.getApplication();
@@ -91,7 +91,7 @@ public class MFTPSettingAct extends _ABaseAct {
     }
     
     public void onFTPOp(View v) {
-    	if (FTPServerService.isRunning()) {
+    	if (org.swiftp.FTPServerService.isRunning()) {
     		stopServer();
     	} else {
     		startServer();
@@ -102,7 +102,7 @@ public class MFTPSettingAct extends _ABaseAct {
         Context context = getApplicationContext();
         NAction.setFtpRoot(context, Environment.getExternalStorageDirectory()+"/"+CONF.BASE_PATH);
         Intent serverService = new Intent(context, FTPServerService.class);
-        if (!FTPServerService.isRunning()) {
+        if (!org.swiftp.FTPServerService.isRunning()) {
             startService(serverService);
         }
     }
@@ -208,29 +208,29 @@ public class MFTPSettingAct extends _ABaseAct {
             TextView running_state = (TextView) findViewById(R.id.ftp_service_value);
             Button ftpOpBtn = (Button)findViewById(R.id.ftp_op_btn);
 
-            if (intent.getAction().equals(FTPServerService.ACTION_STARTED)) {
+            if (intent.getAction().equals(org.swiftp.FTPServerService.ACTION_STARTED)) {
                 // Fill in the FTP server address
-                InetAddress address = FTPServerService.getWifiIp();
+                InetAddress address = org.swiftp.FTPServerService.getWifiIp();
                 if (address == null) {
                     Log.v(TAG, "Unable to retreive wifi ip address");
                     running_state.setText(getString(R.string.cant_get_url));
                     return;
                 }
                 String iptext = "ftp://" + address.getHostAddress() + ":"
-                        + FTPServerService.getPort() + "/";
+                        + org.swiftp.FTPServerService.getPort() + "/";
                 Resources resources = getResources();
                 String summary = resources.getString(R.string.running_summary_started, iptext);
                 running_state.setText(summary);
 
                 ftpOpBtn.setText(getString(R.string.ftp_stop));
 
-            } else if (intent.getAction().equals(FTPServerService.ACTION_STOPPED)) {
+            } else if (intent.getAction().equals(org.swiftp.FTPServerService.ACTION_STOPPED)) {
                 running_state.setText("");
                 running_state.setText(R.string.running_summary_stopped);
 
                 ftpOpBtn.setText(getString(R.string.ftp_start));
 
-            } else if (intent.getAction().equals(FTPServerService.ACTION_FAILEDTOSTART)) {
+            } else if (intent.getAction().equals(org.swiftp.FTPServerService.ACTION_FAILEDTOSTART)) {
                 running_state.setText(R.string.running_summary_failed);
             	ftpOpBtn.setText(getString(R.string.ftp_start));
             }

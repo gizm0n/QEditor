@@ -101,16 +101,16 @@ public class _ABaseAct extends GDBase {
     	} else {
     		proxyCode = "PROXY = {}\n";
     	}*/
-    	String extPlgPlusName = CONF.EXT_PLG_PLUS;
+    	String extPlgPlusName = com.zuowuxuxi.config.CONF.EXT_PLG_PLUS;
     	String extPlg3Name = CONF.EXT_PLG_3;
 		String extPlgName = NAction.getExtP(getApplicationContext(), "ext_plugin");
 		if (extPlgName.equals("")) {
-			extPlgName = CONF.EXT_PLG;
+			extPlgName = com.zuowuxuxi.config.CONF.EXT_PLG;
 		}
 		
 		String plgUrl = NAction.getExtP(getApplicationContext(), "ext_plugin_pkg");
 		if (plgUrl.equals("")) {
-			plgUrl = CONF.EXT_PLG_URL;
+			plgUrl = com.zuowuxuxi.config.CONF.EXT_PLG_URL;
 		}
 		String localQPylib = "com.hipipal.qpylib";
 		// call local api
@@ -222,13 +222,13 @@ public class _ABaseAct extends GDBase {
 		
 		    				String plgUrl = NAction.getExtP(getApplicationContext(), "ext_plugin_pkg");
 		    				if (plgUrl.equals("")) {
-		    					plgUrl = CONF.EXT_PLG_URL;
+		    					plgUrl = com.zuowuxuxi.config.CONF.EXT_PLG_URL;
 		    				}
 		    				try {
 								Intent intent = NAction.openRemoteLink(getApplicationContext(), plgUrl);
 								startActivity(intent);
 		    				} catch (Exception e) {
-		    					plgUrl = CONF.EXT_PLG_URL2;
+		    					plgUrl = com.zuowuxuxi.config.CONF.EXT_PLG_URL2;
 								Intent intent = NAction.openRemoteLink(getApplicationContext(), plgUrl);
 								startActivity(intent);
 		    				}

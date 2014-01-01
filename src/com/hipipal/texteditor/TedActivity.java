@@ -66,6 +66,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	/**
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
+	@Override
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -199,6 +200,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	/**
 	 * @see android.app.Activity#onStart()
 	 */
+	@Override
 	protected void onStart() {
 		super.onStart();
 
@@ -232,6 +234,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	/**
 	 * @see android.app.Activity#onRestart()
 	 */
+	@Override
 	protected void onRestart() {
 		super.onRestart();
 		mReadIntent = false;
@@ -240,6 +243,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	/**
 	 * @see android.app.Activity#onRestoreInstanceState(android.os.Bundle)
 	 */
+	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		Log.d("TED", "onRestoreInstanceState");
@@ -250,6 +254,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	/**
 	 * @see android.app.Activity#onResume()
 	 */
+	@Override
 	protected void onResume() {
 		super.onResume();
 		if (BuildConfig.DEBUG)
@@ -305,6 +310,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	/**
 	 * @see android.app.Activity#onPause()
 	 */
+	@Override
 	protected void onPause() {
 		super.onPause();
 		if (BuildConfig.DEBUG)
@@ -323,6 +329,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	 *      android.content.Intent)
 	 * 
 	 */
+	@Override
 	@TargetApi(11)
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		Bundle extras;
@@ -472,6 +479,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	/**
 	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
 	 */
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		mWarnedShouldQuit = false;
 		switch (item.getItemId()) {
@@ -521,6 +529,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	 * @see android.text.TextWatcher#beforeTextChanged(java.lang.CharSequence,
 	 *      int, int, int)
 	 */
+	@Override
 	public void beforeTextChanged(CharSequence s, int start, int count,
 			int after) {
 		if (Settings.UNDO && (!mInUndo) && (mWatcher != null))
@@ -531,6 +540,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	 * @see android.text.TextWatcher#onTextChanged(java.lang.CharSequence, int,
 	 *      int, int)
 	 */
+	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
 		if (mInUndo)
 			return;
@@ -543,6 +553,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	/**
 	 * @see android.text.TextWatcher#afterTextChanged(android.text.Editable)
 	 */
+	@Override
 	public void afterTextChanged(Editable s) {
 		if (!mDirty) {
 			mDirty = true;
@@ -553,6 +564,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	/**
 	 * @see android.app.Activity#onKeyUp(int, android.view.KeyEvent)
 	 */
+	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
@@ -577,6 +589,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	/**
 	 * @see OnClickListener#onClick(View)
 	 */
+	@Override
 	public void onClick(View v) {
 		mWarnedShouldQuit = false;
 		if (v.getId() == R.id.buttonSearchClose) {
@@ -900,6 +913,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 
 		builder.setPositiveButton(R.string.ui_save,
 				new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						saveContent();
 						mDoNotBackup = true;
@@ -907,12 +921,14 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 				});
 		builder.setNegativeButton(R.string.ui_cancel,
 				new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface dialog, int which) {
 
 					}
 				});
 		builder.setNeutralButton(R.string.ui_no_save,
 				new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						runAfterSave();
 						mDoNotBackup = true;
@@ -928,6 +944,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	 */
 	protected void newContent() {
 		mAfterSave = new Runnable() {
+			@Override
 			public void run() {
 				doClearContents();
 			}
@@ -959,6 +976,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 			Log.d(TAG, "openFile");
 
 		mAfterSave = new Runnable() {
+			@Override
 			public void run() {
 				Intent open = new Intent();
 				open.setClass(getApplicationContext(), TedLocalActivity.class);
@@ -995,6 +1013,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		}
 		
 		mAfterSave = new Runnable() {
+			@Override
 			public void run() {
 				Intent open;
 
@@ -1035,6 +1054,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		final String code = NAction.getCode(this);
 		
 		mAfterSave = new Runnable() {
+			@Override
 			public void run() {
 				if (code.equals("texteditor")) {
 					
@@ -1070,6 +1090,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		return 	super.onHandleActionBarItemClick(item, position);
 	}
 	
+	@Override
 	public boolean onKeyDown(int keyCoder,KeyEvent event){
 		String code =NAction.getCode(this);
     	if (keyCoder == KeyEvent.KEYCODE_BACK) {
@@ -1295,6 +1316,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		}
 	}
 	
+	@Override
 	public void onBack(View v) {
 		if (!undo()) {
 			Toast.makeText(getApplicationContext(), R.string.toast_warn_no_undo, Toast.LENGTH_SHORT).show();
@@ -1356,6 +1378,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	protected void settingsActivity() {
 
 		mAfterSave = new Runnable() {
+			@Override
 			public void run() {
 				Intent settings = new Intent();
 				settings.setClass(TedActivity.this, TedSettingsActivity.class);
@@ -1395,7 +1418,31 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB)
 			invalidateOptionsMenu();
 	}
-
+	
+	@Override
+	public boolean onKeyShortcut(int keyCode, KeyEvent event){
+		if(event.isCtrlPressed()){
+			switch (keyCode) {
+			case KeyEvent.KEYCODE_F:
+				search();
+				break;
+			case KeyEvent.KEYCODE_S:
+				saveContent();
+				break;
+			case KeyEvent.KEYCODE_O:
+				openFile();
+				break;
+			case KeyEvent.KEYCODE_Z:
+				undo();
+				break;
+			default:
+				break;
+			}
+		}
+		return false;
+		
+	}
+	
 	/** the text editor */
 	protected AdvancedEditText mEditor;
 	/** the path of the file currently opened */

@@ -21,6 +21,7 @@ public class TedWidgetConfigActivity extends BrowsingActivity implements Constan
 	/**
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_widget_config);
@@ -36,6 +37,7 @@ public class TedWidgetConfigActivity extends BrowsingActivity implements Constan
 	/**
 	 * @see android.app.Activity#onResume()
 	 */
+	@Override
 	protected void onResume() {
 		super.onResume();
 
@@ -51,6 +53,7 @@ public class TedWidgetConfigActivity extends BrowsingActivity implements Constan
 	/**
 	 * @see android.view.View.OnClickListener#onClick(android.view.View)
 	 */
+	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.buttonCancel) {
 			setResult(RESULT_CANCELED);
@@ -61,6 +64,7 @@ public class TedWidgetConfigActivity extends BrowsingActivity implements Constan
 	/**
 	 * @see fr.xgouchet.androidlib.ui.activity.BrowserActivity#onFileClick(java.io.File)
 	 */
+	@Override
 	protected void onFileClick(File file) {
 		if (file.canRead()) {
 			mSelectedFile = file;
@@ -71,6 +75,7 @@ public class TedWidgetConfigActivity extends BrowsingActivity implements Constan
 	/**
 	 * @see fr.xgouchet.androidlib.ui.activity.BrowserActivity#onFolderClick(java.io.File)
 	 */
+	@Override
 	protected boolean onFolderClick(File folder) {
 		mSelectedFile = null;
 		return true;
@@ -79,6 +84,7 @@ public class TedWidgetConfigActivity extends BrowsingActivity implements Constan
 	/**
 	 * @see fr.xgouchet.androidlib.ui.activity.BrowsingActivity#onFolderViewFilled()
 	 */
+	@Override
 	protected void onFolderViewFilled() {
 
 	}

@@ -39,11 +39,11 @@ public class Bean{
     public void tbdownload(String title, String url, String cat) {
     	
 		Intent intent1 = new Intent(".MTubebook");
-		intent1.putExtra(CONF.EXTRA_CONTENT_URL1, "download");
+		intent1.putExtra(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL1, "download");
 
-		intent1.putExtra(CONF.EXTRA_CONTENT_URL2, url);
-		intent1.putExtra(CONF.EXTRA_CONTENT_URL3, cat);
-		intent1.putExtra(CONF.EXTRA_CONTENT_URL4, title);
+		intent1.putExtra(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL2, url);
+		intent1.putExtra(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL3, cat);
+		intent1.putExtra(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL4, title);
 
     	context.sendBroadcast(intent1);
     }
@@ -98,10 +98,10 @@ public class Bean{
     	} else {
     		intent.setClassName(context.getPackageName(), context.getPackageName()+".MPyLibAct");
     	}
-    	intent.putExtra(CONF.EXTRA_CONTENT_URL0, "install");
-    	intent.putExtra(CONF.EXTRA_CONTENT_URL1, cat);
-    	intent.putExtra(CONF.EXTRA_CONTENT_URL2, link);
-    	intent.putExtra(CONF.EXTRA_CONTENT_URL3, target);
+    	intent.putExtra(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL0, "install");
+    	intent.putExtra(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL1, cat);
+    	intent.putExtra(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL2, link);
+    	intent.putExtra(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL3, target);
 
     	context.startActivity(intent);
     	
@@ -109,9 +109,9 @@ public class Bean{
     
     public void a8playVideoFromGW(String link) {
 		Intent intent1 = new Intent(".MTubebook");
-		intent1.putExtra(CONF.EXTRA_CONTENT_URL1, "playgw");
+		intent1.putExtra(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL1, "playgw");
 
-		intent1.putExtra(CONF.EXTRA_CONTENT_URL2, link);
+		intent1.putExtra(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL2, link);
 
     	context.sendBroadcast(intent1);
 	    	
@@ -121,9 +121,9 @@ public class Bean{
     	//String process = NUtil.getCpuProcessFromByInfo();
     	//String features = NUtil.getCpuFeaturesFromByInfo();
 		Intent intent1 = new Intent(".MTubebook");
-		intent1.putExtra(CONF.EXTRA_CONTENT_URL1, "play");
+		intent1.putExtra(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL1, "play");
 
-		intent1.putExtra(CONF.EXTRA_CONTENT_URL2, link);
+		intent1.putExtra(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL2, link);
 
     	context.sendBroadcast(intent1);
 	    	

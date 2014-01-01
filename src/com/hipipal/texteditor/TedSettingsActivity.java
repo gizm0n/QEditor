@@ -30,6 +30,7 @@ public class TedSettingsActivity extends PreferenceActivity implements
 	 * @see android.preference.PreferenceActivity#onCreate(android.os.Bundle)
 	 */
 
+	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
@@ -52,6 +53,7 @@ public class TedSettingsActivity extends PreferenceActivity implements
 
 		findPreference(PREFERENCE_SELECT_FONT).setOnPreferenceClickListener(
 				new OnPreferenceClickListener() {
+					@Override
 					public boolean onPreferenceClick(Preference preference) {
 						Intent selectFont = new Intent();
 						selectFont.setClass(getApplicationContext(),
@@ -73,6 +75,7 @@ public class TedSettingsActivity extends PreferenceActivity implements
 	 * @see android.content.SharedPreferences.OnSharedPreferenceChangeListener#onSharedPreferenceChanged(android.content.SharedPreferences,
 	 *      java.lang.String)
 	 */
+	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
 		Settings.updateFromPreferences(sharedPreferences);
@@ -101,6 +104,7 @@ public class TedSettingsActivity extends PreferenceActivity implements
 	 * @see android.preference.PreferenceActivity#onActivityResult(int, int,
 	 *      android.content.Intent)
 	 */
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		Bundle extras;
 
