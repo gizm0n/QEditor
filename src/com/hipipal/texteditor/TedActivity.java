@@ -147,12 +147,21 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 			int startSelection=et.getSelectionStart();
 			int endSelection=et.getSelectionEnd();
 			String selectedText = et.getText().toString().substring(startSelection, endSelection); 
-			
-			Intent sendIntent = new Intent();
-			sendIntent.setAction(Intent.ACTION_SEND);
-			sendIntent.putExtra(Intent.EXTRA_TEXT, selectedText);
-			sendIntent.setType("text/plain");
-			startActivity(sendIntent);
+			if(selectedText.length() != 0){
+				Intent sendIntent = new Intent();
+				sendIntent.setAction(Intent.ACTION_SEND);
+				sendIntent.putExtra(Intent.EXTRA_TEXT, selectedText);
+				sendIntent.setType("text/plain");
+				startActivity(sendIntent);
+			}else{
+				String dataToShare = et.getText().toString();
+				Intent sendIntent = new Intent();
+				sendIntent.setAction(Intent.ACTION_SEND);
+				sendIntent.putExtra(Intent.EXTRA_TEXT, dataToShare);
+				sendIntent.setType("text/plain");
+				startActivity(sendIntent);
+			}
+					
 			//Toast.makeText(getApplicationContext(), selectedText, Toast.LENGTH_SHORT).show();
 		}
 		public void setSearch(){
@@ -1287,13 +1296,6 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	
 	public void onLeft(View v) {
 		leftIndent();
-//		int index = mEditor.getSelectionStart();
-//		Editable editable = mEditor.getText();
-//		if (index>=4) {
-//			if (editable.subSequence(index -4, index).toString().equals("    ")) {
-//				editable.delete(index-4, index);
-//			}
-//		}
 	}
 	public void leftIndent(){
 		int index = mEditor.getSelectionStart();
@@ -1306,25 +1308,6 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	}
 	public void onRight(View v) {
 		rightIndnent();
-//		int startSelection= mEditor.getSelectionStart();
-//		int endSelection=mEditor.getSelectionEnd();
-//		String selectedText = mEditor.getText().toString().substring(startSelection, endSelection);
-//		Editable editable = mEditor.getText();
-//		if(selectedText.length() != 0){
-//			String startData = mEditor.getText().toString();
-//			String textData = startData.substring(0, startSelection); 
-//			if(textData.contains("\n")){
-//				int newLineIndex = textData.lastIndexOf("\n");
-//				editable.replace(newLineIndex, newLineIndex, "\n    ");
-//			}else{
-//				editable.insert(0, "    ");
-//			}
-//			String indentedText = selectedText.replace("\n", "\n    ");
-//			editable.replace(startSelection, endSelection, indentedText);
-//		}else{
-//			int index = mEditor.getSelectionStart();
-//			editable.insert(index, "    ");
-//		}
 	}
 	
 	public void rightIndnent(){
@@ -1357,24 +1340,6 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	}
 	public void onPlay(View v) {
 		runScript();
-//		String content = mEditor.getText().toString().trim();
-//		if (content.length() == 0) {
-//			Toast.makeText(getApplicationContext(), R.string.cannot_empty, Toast.LENGTH_SHORT).show();
-//		} else {
-//			if (content.startsWith("<")) {
-//				//doAutoSaveFile(false);
-//				doSaveFile(mCurrentFilePath, false);
-//
-//				Intent intent = new Intent(getApplicationContext(), MTubebook.class);
-//				Uri data = Uri.fromFile(new File(mCurrentFilePath));
-//				intent.setData(data);
-//				startActivity(intent);
-//
-//	
-//			} else {
-//				callPyApi("qedit",mCurrentFilePath,content);
-//			}
-//		}
 	}
 	public void runScript(){
 		String content = mEditor.getText().toString().trim();
@@ -1476,7 +1441,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	public boolean onKeyShortcut(int keyCode, KeyEvent event){
 		if(event.isCtrlPressed()){
 			switch (keyCode) {
-			case KeyEvent.KEYCODE_F:
+			case KeyEvent.KEYCODE_F: 
 				search();
 				break;
 			case KeyEvent.KEYCODE_S:
@@ -1496,13 +1461,16 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 				break;
 			case KeyEvent.KEYCODE_R:
 				runScript();
-				break;
+				
+				break;				
 			default:
 				break;
 			}
 		}
+		if(KeyEvent.META_SHIFT_ON){
+			
+		}
 		return false;
-		
 	}
 	
 	/** the text editor */
