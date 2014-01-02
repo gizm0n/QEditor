@@ -8,6 +8,8 @@ import static fr.xgouchet.androidlib.ui.Toaster.showToast;
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.hipipal.texteditor.common.Constants;
 import com.hipipal.texteditor.common.RecentFiles;
@@ -22,6 +24,7 @@ import com.zuowuxuxi.util.NAction;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -35,6 +38,7 @@ import android.os.Build.VERSION_CODES;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -1084,8 +1088,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	    		break;
 	    	case 20:
 				openFile();
-	    		break;
-	    		
+	    		break;	    		
 	    	case 30:
 	    		//mBarM.show(item.getItemView());
 				newContent();
@@ -1338,6 +1341,70 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 			//Crouton.showText(this, R.string.toast_warn_no_undo, Style.INFO);
 		}
 	}
+	
+	public int NewLineIndex(String data, int indexNewLine){
+		List<Integer> IndexesOfnewLines = new ArrayList<Integer>();
+		for (int i = 0; i < data.length(); i++){
+			if(data.charAt(i)=='\n'){
+				IndexesOfnewLines.add(i);
+			}
+		}
+		return IndexesOfnewLines.get(indexNewLine);
+	}
+	
+	public void goToLine(){
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Go to Line");
+		final EditText input = new EditText(this);
+		input.setInputType(InputType.TYPE_CLASS_NUMBER);
+		input.setHint("line number");
+		builder.setView(input);
+
+//		input.addTextChangedListener(new TextWatcher() {
+//
+//			public void afterTextChanged(Editable s) {
+//			}
+//
+//			public void beforeTextChanged(CharSequence s, int start, int count,
+//					int after) {
+//			}
+//
+//			public void onTextChanged(CharSequence s, int start, int before,
+//					int count) {
+//				int lineCount = mEditor.getLineCount();
+//		        int lineNumberToGoTo = Integer.parseInt(""+s); 
+//		        if(lineNumberToGoTo <= lineCount){
+//		        	input.setBackgroundResource(R.drawable.green);
+//		        }else{
+//		        	input.setBackgroundResource(R.drawable.red);
+//		        }
+//			}
+//		});
+		
+		builder.setPositiveButton("Go To", new DialogInterface.OnClickListener() { 
+		    @Override
+		    public void onClick(DialogInterface dialog, int which) {
+		    	int lineCount = mEditor.getLineCount();
+		        int lineNumberToGoTo = Integer.parseInt(input.getText().toString()); 
+		        if(lineNumberToGoTo <= lineCount){
+		        	//mEditor.scrollTo(0, lineNumberTGoTo); 
+		        	int position = NewLineIndex(mEditor.getText().toString(), lineNumberToGoTo-1);
+		        	mEditor.setSelection(position);
+		        }else{
+		        	Toast.makeText(getApplicationContext(), "out of range", Toast.LENGTH_SHORT).show();
+		        }
+		    }
+		});
+		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface dialog, int which) {
+		        dialog.cancel();
+		    }
+		});
+		
+		builder.show();
+	}
+	
 	public void onPlay(View v) {
 		runScript();
 	}
@@ -1437,6 +1504,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 			invalidateOptionsMenu();
 	}
 	
+	// http://developer.android.com/reference/android/view/KeyEvent.html
 	@Override
 	public boolean onKeyShortcut(int keyCode, KeyEvent event){
 		if(event.isCtrlPressed()){
@@ -1453,6 +1521,9 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 			case KeyEvent.KEYCODE_Z:
 				undo();
 				break;
+			case KeyEvent.KEYCODE_L:
+				goToLine();
+				break;
 			case KeyEvent.KEYCODE_LEFT_BRACKET:
 				leftIndent();
 				break;
@@ -1461,14 +1532,10 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 				break;
 			case KeyEvent.KEYCODE_R:
 				runScript();
-				
 				break;				
 			default:
 				break;
 			}
-		}
-		if(KeyEvent.META_SHIFT_ON){
-			
 		}
 		return false;
 	}

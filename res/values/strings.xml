@@ -109,7 +109,11 @@
 
 	<string name="support_intro">It\'s not Python / HTML file</string>
 	<string name="pls_install_ext_plg">Please install the QPython Plugin</string>
+	
+	<!--  added by kyle -->
 	<string name="find">find</string>
 	<string name="share">Share</string>
+	<string name="line_picker_title">Go to Line</string>
+	<string name="line_picker_hint">line number</string>
 
 </resources>
