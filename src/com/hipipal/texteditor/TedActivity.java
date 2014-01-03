@@ -48,6 +48,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -1342,14 +1343,19 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		}
 	}
 	
-	public int NewLineIndex(String data, int indexNewLine){
-		List<Integer> IndexesOfnewLines = new ArrayList<Integer>();
-		for (int i = 0; i < data.length(); i++){
-			if(data.charAt(i)=='\n'){
-				IndexesOfnewLines.add(i);
-			}
+	public int NewLineIndex(int indexNewLine){
+		String data = mEditor.getText().toString();
+		final StringBuffer sb = new StringBuffer(data);
+		List<Integer> myList = new ArrayList<Integer>();
+		myList.add(0);
+		for (int i = 0; i < sb.length(); i++) {
+			if (sb.charAt(i) == '\n')
+				//System.out.println("New line at " + i);
+				myList.add(i);
 		}
-		return IndexesOfnewLines.get(indexNewLine);
+		//myList.add(sb.length());
+		//System.out.println(myList.get(indexNewLine));
+		return myList.get(indexNewLine);
 	}
 	
 	public void goToLine(){
@@ -1357,39 +1363,17 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		builder.setTitle("Go to Line");
 		final EditText input = new EditText(this);
 		input.setInputType(InputType.TYPE_CLASS_NUMBER);
-		input.setHint("line number");
+		input.setHint("line number less than "+mEditor.getLineCount());
 		builder.setView(input);
-
-//		input.addTextChangedListener(new TextWatcher() {
-//
-//			public void afterTextChanged(Editable s) {
-//			}
-//
-//			public void beforeTextChanged(CharSequence s, int start, int count,
-//					int after) {
-//			}
-//
-//			public void onTextChanged(CharSequence s, int start, int before,
-//					int count) {
-//				int lineCount = mEditor.getLineCount();
-//		        int lineNumberToGoTo = Integer.parseInt(""+s); 
-//		        if(lineNumberToGoTo <= lineCount){
-//		        	input.setBackgroundResource(R.drawable.green);
-//		        }else{
-//		        	input.setBackgroundResource(R.drawable.red);
-//		        }
-//			}
-//		});
 		
 		builder.setPositiveButton("Go To", new DialogInterface.OnClickListener() { 
 		    @Override
 		    public void onClick(DialogInterface dialog, int which) {
 		    	int lineCount = mEditor.getLineCount();
 		        int lineNumberToGoTo = Integer.parseInt(input.getText().toString()); 
-		        if(lineNumberToGoTo <= lineCount){
-		        	//mEditor.scrollTo(0, lineNumberTGoTo); 
-		        	int position = NewLineIndex(mEditor.getText().toString(), lineNumberToGoTo-1);
-		        	mEditor.setSelection(position);
+		        if(lineNumberToGoTo < lineCount){		        
+		        	int position = NewLineIndex(lineNumberToGoTo);
+		        	mEditor.setSelection(position); 
 		        }else{
 		        	Toast.makeText(getApplicationContext(), "out of range", Toast.LENGTH_SHORT).show();
 		        }
@@ -1401,7 +1385,23 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		        dialog.cancel();
 		    }
 		});
-		
+		input.setOnKeyListener(new OnKeyListener() {
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+					(keyCode == KeyEvent.KEYCODE_ENTER)) {
+					int lineCount = mEditor.getLineCount();
+			        int lineNumberToGoTo = Integer.parseInt(input.getText().toString()); 
+			        if(lineNumberToGoTo < lineCount){		        
+			        	int position = NewLineIndex(lineNumberToGoTo);
+			        	mEditor.setSelection(position); 
+			        }else{
+			        	Toast.makeText(getApplicationContext(), "out of range", Toast.LENGTH_SHORT).show();
+			        }
+					return true;
+				}
+				return false;
+			}
+		});
 		builder.show();
 	}
 	
