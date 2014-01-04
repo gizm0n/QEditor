@@ -1350,20 +1350,17 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		myList.add(0);
 		for (int i = 0; i < sb.length(); i++) {
 			if (sb.charAt(i) == '\n')
-				//System.out.println("New line at " + i);
 				myList.add(i);
 		}
-		//myList.add(sb.length());
-		//System.out.println(myList.get(indexNewLine));
 		return myList.get(indexNewLine);
 	}
 	
 	public void goToLine(){
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Go to Line");
+		builder.setTitle(R.string.line_picker_title);
 		final EditText input = new EditText(this);
 		input.setInputType(InputType.TYPE_CLASS_NUMBER);
-		input.setHint("line number less than "+mEditor.getLineCount());
+		input.setHint("Line number less than "+mEditor.getLineCount());
 		builder.setView(input);
 		
 		builder.setPositiveButton("Go To", new DialogInterface.OnClickListener() { 

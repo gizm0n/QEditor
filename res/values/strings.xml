@@ -114,6 +114,6 @@
 	<string name="find">find</string>
 	<string name="share">Share</string>
 	<string name="line_picker_title">Go to Line</string>
-	<string name="line_picker_hint">line number</string>
+	<string name="line_picker_hint">Line number less than </string>
 
 </resources>
