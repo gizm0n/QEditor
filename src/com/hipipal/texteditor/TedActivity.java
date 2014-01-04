@@ -1384,23 +1384,6 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		        dialog.cancel();
 		    }
 		});
-		input.setOnKeyListener(new OnKeyListener() {
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-					(keyCode == KeyEvent.KEYCODE_ENTER)) {
-					int lineCount = mEditor.getLineCount();
-			        int lineNumberToGoTo = Integer.parseInt(input.getText().toString()); 
-			        if(lineNumberToGoTo < lineCount){		        
-			        	int position = NewLineIndex(lineNumberToGoTo);
-			        	mEditor.setSelection(position); 
-			        }else{
-			        	Toast.makeText(getApplicationContext(), "out of range", Toast.LENGTH_SHORT).show();
-			        }
-					return true;
-				}
-				return false;
-			}
-		});
 		builder.show();
 	}
 	
