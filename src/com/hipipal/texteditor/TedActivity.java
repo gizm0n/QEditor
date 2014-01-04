@@ -142,9 +142,9 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 			if (item.getItemId() ==R.id.shareText)
 			{
 					shareData();
-			} else if (item.getItemId() == R.id.findText) {
-					setSearch();
-			}
+			}// else if (item.getItemId() == R.id.findText) {
+//					setSearch();
+//			}
 			return false;
 		}
 		public void shareData()
