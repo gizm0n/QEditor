@@ -170,15 +170,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 					
 			//Toast.makeText(getApplicationContext(), selectedText, Toast.LENGTH_SHORT).show();
 		}
-		public void setSearch(){
-			search();
-			
-			EditText et=(EditText)findViewById(R.id.editor);
-			int startSelection=et.getSelectionStart();
-			int endSelection=et.getSelectionEnd();
-			String selectedText = et.getText().toString().substring(startSelection, endSelection); 
-			mSearchInput.setText(selectedText);
-		}
+		
 
 		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 		@Override
@@ -205,7 +197,16 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 			return false;
 		}
 	}
-
+	public void setSearch(){
+		search();
+					
+		int startSelection=mEditor.getSelectionStart();
+		int endSelection=mEditor.getSelectionEnd();
+		String selectedText = mEditor.getText().toString().substring(startSelection, endSelection); 
+		if(selectedText.length() != 0){
+			mSearchInput.setText(selectedText);
+		}
+	}
 
     @Override
     public int createLayout() {
@@ -1508,7 +1509,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		if(event.isCtrlPressed()){
 			switch (keyCode) {
 			case KeyEvent.KEYCODE_F: 
-				search();
+				setSearch();
 				break;
 			case KeyEvent.KEYCODE_S:
 				saveContent();
