@@ -83,9 +83,10 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
         String code = NAction.getCode(this);
         setTitle(getString(R.string.app_name));
 
+        ImageButton homeBtn = (ImageButton)findViewById(R.id.gd_action_bar_home_item);
+        homeBtn.setImageResource(R.drawable.icon_nb);
+
         if (code.equals("texteditor")) {
-	        ImageButton homeBtn = (ImageButton)findViewById(R.id.gd_action_bar_home_item);
-	        homeBtn.setImageResource(R.drawable.icon_nb);
 	        
 	        
 			checkUpdate(CONF.BASE_PATH);

@@ -8,7 +8,7 @@
         android:title="@string/find"/>
     <item
         android:id="@+id/shareText"
-        android:icon="@drawable/ic_menu_share"
+        android:icon="@drawable/ic_social_share_1"
         android:showAsAction="always"
         android:title="@string/share"/>
 

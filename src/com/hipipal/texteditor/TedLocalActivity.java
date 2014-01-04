@@ -243,7 +243,7 @@ public class TedLocalActivity extends _ABaseAct implements Constants {
         mBarT = new QuickActionBar(this);
         mBarT.addQuickAction(new MyQuickAction(this, R.drawable.ic_delete, R.string.info_delete));
         mBarT.addQuickAction(new MyQuickAction(this, R.drawable.ic_edit_b, R.string.info_rename));
-        mBarT.addQuickAction(new MyQuickAction(this, R.drawable.ic_menu_share_holo_light, R.string.share));
+        mBarT.addQuickAction(new MyQuickAction(this, R.drawable.ic_menu_share, R.string.share));
         
         mBarT.setOnQuickActionClickListener(mActionListener);
     }
