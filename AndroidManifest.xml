@@ -80,6 +80,10 @@
                     android:scheme="file" />
                 <data
                     android:host="*"
+                    android:pathPattern=".*\\.md"
+                    android:scheme="file" />
+                <data
+                    android:host="*"
                     android:pathPattern=".*\\.xhtml"
                     android:scheme="file" />
                 <data

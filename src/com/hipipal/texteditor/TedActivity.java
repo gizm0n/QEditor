@@ -6,6 +6,7 @@ import static fr.xgouchet.androidlib.data.FileUtils.renameItem;
 import static fr.xgouchet.androidlib.ui.Toaster.showToast;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -44,11 +47,13 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -60,7 +65,7 @@ import com.hipipal.texteditor.BuildConfig;
 import greendroid.widget.ActionBarItem;
 import greendroid.widget.QuickActionWidget;
 //import greendroid.widget.QuickActionWidget.OnQuickActionClickListener;
-
+import org.markdown4j.Markdown4jProcessor;
 public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		OnClickListener {
 	public static final String TAG = "TED";
@@ -293,7 +298,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		ImageButton pBtn = (ImageButton)findViewById(R.id.play_btn);
 		pBtn.setVisibility(View.VISIBLE);
 
-		if (mCurrentFilePath!=null && (mCurrentFilePath.endsWith(".py") || mCurrentFilePath.endsWith(".html") || mCurrentFilePath.endsWith(".htm"))) {
+		if (mCurrentFilePath!=null && (mCurrentFilePath.endsWith(".py") || mCurrentFilePath.endsWith(".md") || mCurrentFilePath.endsWith(".html") || mCurrentFilePath.endsWith(".htm"))) {
 			pBtn.setImageResource(mCurrentFilePath.endsWith(".py")?R.drawable.ic_go:R.drawable.ic_from_website);
 			pBtn.setOnClickListener(new OnClickListener() {
 
@@ -1403,9 +1408,20 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 				Uri data = Uri.fromFile(new File(mCurrentFilePath));
 				intent.setData(data);
 				startActivity(intent);
-
-	
-			} else {
+			
+			}else if(mCurrentFilePath.endsWith(".md")){
+				try {
+					String markupToTranslate = mEditor.getText().toString();
+					String htmlContent = new Markdown4jProcessor().process(markupToTranslate);
+					LayoutInflater inflater = LayoutInflater.from(getBaseContext());
+				    View theInflatedView = inflater.inflate(R.layout.markdown_webview, null);
+				    WebView md_wv = (WebView) theInflatedView.findViewById(R.id.markdown_wv);
+				    md_wv.loadData(htmlContent, "text/html", "UTF-8");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else {
 				callPyApi("qedit",mCurrentFilePath,content);
 			}
 		}

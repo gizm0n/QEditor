@@ -207,7 +207,8 @@ public class MTubebook extends _ABaseAct implements OnTouchListener, Handler.Cal
 		}
     	
 		//disNotify(TAG);
-        IntentFilter filter = new IntentFilter(".MTubebook");
+        
+IntentFilter filter = new IntentFilter(".MTubebook");
 
 		registerReceiver(playOrDownloadReceiver, filter);
     }
