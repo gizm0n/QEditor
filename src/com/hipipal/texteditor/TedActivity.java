@@ -1413,6 +1413,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 				try {
 					String markupToTranslate = mEditor.getText().toString();
 					String htmlContent = new Markdown4jProcessor().process(markupToTranslate);
+					System.out.println("Inflating WebView: \n"+htmlContent);
 					LayoutInflater inflater = LayoutInflater.from(getBaseContext());
 				    View theInflatedView = inflater.inflate(R.layout.markdown_webview, null);
 				    WebView md_wv = (WebView) theInflatedView.findViewById(R.id.markdown_wv);
