@@ -1414,8 +1414,12 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 					String markupToTranslate = mEditor.getText().toString();
 					String htmlContent = new Markdown4jProcessor().process(markupToTranslate);
 					System.out.println("Inflating WebView: \n"+htmlContent);
-					LayoutInflater inflater = LayoutInflater.from(getBaseContext());
+					//LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+					LayoutInflater inflater = (LayoutInflater)getApplicationContext().getSystemService      
+							(Context.LAYOUT_INFLATER_SERVICE);
 				    View theInflatedView = inflater.inflate(R.layout.markdown_webview, null);
+				    LinearLayout editor_layout = (LinearLayout) findViewById(R.id.editor_layout);
+				    editor_layout.addView(theInflatedView);
 				    WebView md_wv = (WebView) theInflatedView.findViewById(R.id.markdown_wv);
 				    md_wv.loadData(htmlContent, "text/html", "UTF-8");
 				} catch (IOException e) {
