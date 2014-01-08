@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,6 +54,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import org.markdown4j.Markdown4jProcessor;
 
 public class MTubebook extends _ABaseAct implements OnTouchListener, Handler.Callback  {
 	private static final String TAG = "search";
@@ -186,7 +189,7 @@ public class MTubebook extends _ABaseAct implements OnTouchListener, Handler.Cal
     	
     	String sAct = getIntent().getStringExtra(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL1);
     	String term = getIntent().getStringExtra(com.zuowuxuxi.config.CONF.EXTRA_CONTENT_URL2);
-		final EditText searchInput = (EditText)findViewById(R.id.url_input);
+		final EditText searchInput = (EditText) findViewById(R.id.url_input);
 
 		if (searchInput!=null) {
 	    	if (sAct!=null && sAct.equals("search")) {
@@ -493,11 +496,20 @@ IntentFilter filter = new IntentFilter(".MTubebook");
 			if (lang.equals("zh")) {
 				html5file = "http://play.qpython.com/mna8-video-zh.php";
 			}*/
-			
-	    	EditText termT = (EditText)findViewById(R.id.url_input);    	
-	    	termT.setText(mediaUrl);
-			loadurl(wv, mediaUrl);
-    		
+            if(mediaUrl.endsWith(".md")){
+				try {
+					String markupToTranslate = readFile(mediaUrl.substring(7));
+					String htmlContent = new Markdown4jProcessor().process(markupToTranslate);
+					wv.loadData(htmlContent, "text/html", "UTF-8");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }else{
+            	EditText termT = (EditText)findViewById(R.id.url_input);    	
+            	termT.setText(mediaUrl);
+            	loadurl(wv, mediaUrl);
+            }
     	/*} else {
     		
 			String html5file = "file:///android_asset/mbox/md3.html";
@@ -519,7 +531,22 @@ IntentFilter filter = new IntentFilter(".MTubebook");
     	}*/
     }
     
+    private String readFile(String pathname) throws IOException {
 
+        File file = new File(pathname);
+        StringBuilder fileContents = new StringBuilder((int)file.length());
+        Scanner scanner = new Scanner(file);
+        String lineSeparator = System.getProperty("line.separator");
+
+        try {
+            while(scanner.hasNextLine()) {        
+                fileContents.append(scanner.nextLine() + lineSeparator);
+            }
+            return fileContents.toString();
+        } finally {
+            scanner.close();
+        }
+    }
 
 	@SuppressWarnings("deprecation")
 	@Override  

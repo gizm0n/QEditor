@@ -6,7 +6,6 @@ import static fr.xgouchet.androidlib.data.FileUtils.renameItem;
 import static fr.xgouchet.androidlib.ui.Toaster.showToast;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -27,8 +26,6 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -47,13 +44,10 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
-import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -65,7 +59,7 @@ import com.hipipal.texteditor.BuildConfig;
 import greendroid.widget.ActionBarItem;
 import greendroid.widget.QuickActionWidget;
 //import greendroid.widget.QuickActionWidget.OnQuickActionClickListener;
-import org.markdown4j.Markdown4jProcessor;
+
 public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		OnClickListener {
 	public static final String TAG = "TED";
@@ -1400,7 +1394,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		if (content.length() == 0) {
 			Toast.makeText(getApplicationContext(), R.string.cannot_empty, Toast.LENGTH_SHORT).show();
 		} else {
-			if (content.startsWith("<")) {
+			if (content.startsWith("<") || mCurrentFilePath.endsWith(".md")) {
 				//doAutoSaveFile(false);
 				doSaveFile(mCurrentFilePath, false);
 
@@ -1409,23 +1403,6 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 				intent.setData(data);
 				startActivity(intent);
 			
-			}else if(mCurrentFilePath.endsWith(".md")){
-				try {
-					String markupToTranslate = mEditor.getText().toString();
-					String htmlContent = new Markdown4jProcessor().process(markupToTranslate);
-					System.out.println("Inflating WebView: \n"+htmlContent);
-					//LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
-					LayoutInflater inflater = (LayoutInflater)getApplicationContext().getSystemService      
-							(Context.LAYOUT_INFLATER_SERVICE);
-				    View theInflatedView = inflater.inflate(R.layout.markdown_webview, null);
-				    LinearLayout editor_layout = (LinearLayout) findViewById(R.id.editor_layout);
-				    editor_layout.addView(theInflatedView);
-				    WebView md_wv = (WebView) theInflatedView.findViewById(R.id.markdown_wv);
-				    md_wv.loadData(htmlContent, "text/html", "UTF-8");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 			}else {
 				callPyApi("qedit",mCurrentFilePath,content);
 			}
