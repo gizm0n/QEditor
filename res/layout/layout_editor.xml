@@ -146,16 +146,3 @@
         layout="@layout/search" />
 
 </LinearLayout>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/webview_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <WebView
-        android:id="@+id/markdown_wv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </WebView>
-
-</RelativeLayout>
