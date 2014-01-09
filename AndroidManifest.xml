@@ -64,8 +64,12 @@
                 <action android:name="android.intent.action.EDIT" />
                 <action android:name="com.hipipal.texteditor.ACTION_TED_WIDGET_OPEN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-
+                <category android:name="android.intent.category.DEFAULT" />      
+                                                
+                 <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:scheme="file" />
                 <data
                     android:host="*"
                     android:pathPattern=".*\\.js"
