@@ -437,13 +437,15 @@ public class TedLocalActivity extends _ABaseAct implements Constants {
 			showDialog(_WBase.DIALOG_YES_NO_MESSAGE+dialogIndex);
 			dialogIndex++;
     }
-    
+    /**
+     * Share the selected file
+     */
     public void shareFile() {
     	Object o1 = curTextItem.getTag(1);
     	String filename = o1.toString();
     	File file = new File(filename);
     	if (file.isFile()) {
-    		// Not filtering for share file intent 
+    		//Bug: Not filtering for share file intent 
     		Intent sendIntent = new Intent(Intent.ACTION_SEND);
     		sendIntent.setType("text/plain");
         	sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));

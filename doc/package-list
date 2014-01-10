@@ -1,0 +1,5 @@
+com.hipipal.texteditor
+com.hipipal.texteditor.common
+com.hipipal.texteditor.ui.adapter
+com.hipipal.texteditor.ui.view
+com.hipipal.texteditor.undo

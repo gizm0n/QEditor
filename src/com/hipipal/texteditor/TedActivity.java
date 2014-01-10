@@ -129,6 +129,11 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 
 		
 	}
+	/**
+	 * The contextual action bar (CAB)
+	 * @author kyle kersey
+	 *
+	 */
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	class ActionBarCallBack implements ActionMode.Callback
 	{
@@ -146,12 +151,19 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 //			}
 			return false;
 		}
+		
+		/**
+		 * Create a share Intent
+		 */
 		public void shareData()
 		{
 			EditText et=(EditText)findViewById(R.id.editor);
 			int startSelection=et.getSelectionStart();
 			int endSelection=et.getSelectionEnd();
 			String selectedText = et.getText().toString().substring(startSelection, endSelection); 
+			/**
+			 * Detect if the text is selected
+			 */
 			if(selectedText.length() != 0){
 				Intent sendIntent = new Intent();
 				sendIntent.setAction(Intent.ACTION_SEND);
@@ -1302,6 +1314,9 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	public void onLeft(View v) {
 		leftIndent();
 	}
+	/**
+	 * Indent the text left
+	 */
 	public void leftIndent(){
 		int index = mEditor.getSelectionStart();
 		Editable editable = mEditor.getText();
@@ -1314,7 +1329,9 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	public void onRight(View v) {
 		rightIndnent();
 	}
-	
+	/**
+	 * Indent the text right
+	 */
 	public void rightIndnent(){
 		int startSelection= mEditor.getSelectionStart();
 		int endSelection=mEditor.getSelectionEnd();
@@ -1343,7 +1360,11 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 			//Crouton.showText(this, R.string.toast_warn_no_undo, Style.INFO);
 		}
 	}
-	
+	/**
+	 * Calculate the index of the Nth new line
+	 * @param indexNewLine New line to find
+	 * @return Gives the position of the Nth new line 
+	 */
 	public int NewLineIndex(int indexNewLine){
 		String data = mEditor.getText().toString();
 		final StringBuffer sb = new StringBuffer(data);
@@ -1355,7 +1376,9 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		}
 		return myList.get(indexNewLine);
 	}
-	
+	/**
+	 * Go to Line number in file
+	 */
 	public void goToLine(){
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.line_picker_title);
@@ -1389,12 +1412,15 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	public void onPlay(View v) {
 		runScript();
 	}
+	/**
+	 * Run the current script
+	 */
 	public void runScript(){
 		String content = mEditor.getText().toString().trim();
 		if (content.length() == 0) {
 			Toast.makeText(getApplicationContext(), R.string.cannot_empty, Toast.LENGTH_SHORT).show();
 		} else {
-			if (content.startsWith("<") || mCurrentFilePath.endsWith(".md")) {
+			if (content.startsWith("<") || mCurrentFilePath.endsWith(".md") || mCurrentFilePath.endsWith(".html")) {
 				//doAutoSaveFile(false);
 				doSaveFile(mCurrentFilePath, false);
 
@@ -1484,7 +1510,9 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 			invalidateOptionsMenu();
 	}
 	
-	// http://developer.android.com/reference/android/view/KeyEvent.html
+	/**
+	 * Defines the keyboard layout 
+	 */
 	@Override
 	public boolean onKeyShortcut(int keyCode, KeyEvent event){
 		if(event.isCtrlPressed()){

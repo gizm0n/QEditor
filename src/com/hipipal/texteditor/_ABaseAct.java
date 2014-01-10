@@ -86,6 +86,12 @@ public class _ABaseAct extends GDBase {
     	super.onConfigurationChanged(newConfig);
     }
     
+    /**
+     * call the Qpython API
+     * @param flag
+     * @param param
+     * @param pyCode is the python code to run 
+     */
     @SuppressWarnings("deprecation")
 	public void callPyApi(String flag, String param, String pyCode) {
     	//Log.d(TAG, "callPyApi:"+pyCode);

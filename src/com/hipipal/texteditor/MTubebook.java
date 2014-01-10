@@ -404,7 +404,9 @@ IntentFilter filter = new IntentFilter(".MTubebook");
 	public void onConfigurationChanged(Configuration newConfig) {
     	super.onConfigurationChanged(newConfig);
     }
-    
+    /**
+     * Start the WebView
+     */
     public void startWV() {
     	initWebView();//执行初始化函数
         MyBean bean = new MyBean(this);
@@ -496,6 +498,9 @@ IntentFilter filter = new IntentFilter(".MTubebook");
 			if (lang.equals("zh")) {
 				html5file = "http://play.qpython.com/mna8-video-zh.php";
 			}*/
+            /**
+             * Convert the markdown to HTML for displaying in the WebView 
+             */
             if(mediaUrl.endsWith(".md")){
 				try {
 					String markupToTranslate = readFile(mediaUrl.substring(7));
@@ -530,7 +535,6 @@ IntentFilter filter = new IntentFilter(".MTubebook");
 			loadurl(wv, html5file);
     	}*/
     }
-    
     private String readFile(String pathname) throws IOException {
 
         File file = new File(pathname);
