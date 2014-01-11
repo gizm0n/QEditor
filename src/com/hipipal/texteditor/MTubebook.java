@@ -505,7 +505,9 @@ IntentFilter filter = new IntentFilter(".MTubebook");
 				try {
 					String markupToTranslate = readFile(mediaUrl.substring(7));
 					String htmlContent = new Markdown4jProcessor().process(markupToTranslate);
-					wv.loadData(htmlContent, "text/html", "UTF-8");
+	        		wv.loadDataWithBaseURL("md://"+mediaUrl.substring(7),htmlContent, "text/html", "UTF-8", "");
+
+					//wv.loadData(htmlContent, "text/html", "UTF-8");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -601,7 +603,7 @@ IntentFilter filter = new IntentFilter(".MTubebook");
     		Toast.makeText(getApplicationContext(), R.string.err_not_input, Toast.LENGTH_SHORT).show();
     	} else {
     		url = termT.getText().toString();
-    		if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("file://") && !url.startsWith("content://")) {
+    		if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("file://") && !url.startsWith("content://") && !url.startsWith("md://")) {
     			url = "http://"+url;
     			termT.setText(url);
     		}

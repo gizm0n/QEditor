@@ -1,7 +1,7 @@
 package com.hipipal.texteditor;
 
 public class CONF extends com.zuowuxuxi.config.CONF{
-	public final static String MUEXT = "#htm#xhtml#php#sh#conf#cfg#ini#py#txt#html#js#htm#kv#log#xml#xslt#yaml#css#less#";
+	public final static String MUEXT = "#htm#xhtml#php#sh#conf#cfg#ini#py#txt#html#js#htm#kv#log#xml#xslt#yaml#css#less#md#";
 	//public static String  MANUAL_LINK = "http://qpython.org/?qpyplus";
     public final static String GOOGLE_TRACKER_ID = "UA-35841487-1";
     public final static String BASE_PATH = "com.hipipal.qpyplus";
