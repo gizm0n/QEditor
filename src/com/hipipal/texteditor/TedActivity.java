@@ -208,6 +208,9 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 			return false;
 		}
 	}
+	/**
+	 * Set the search using the selected text
+	 */
 	public void setSearch(){
 		search();
 					
@@ -1061,7 +1064,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	}
 
 	/**
-	 * Warns the user that the next back press will qui the application, or quit
+	 * Warns the user that the next back press will quit the application, or quit
 	 * if the warning has already been shown
 	 */
 	protected void warnOrQuit() {

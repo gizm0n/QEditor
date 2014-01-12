@@ -118,6 +118,10 @@
                     android:host="*"
                     android:pathPattern=".*\\.cfg"
                     android:scheme="file" />
+                  <data
+                    android:host="*"
+                    android:pathPattern=".*\\.c"
+                    android:scheme="file" />
             </intent-filter>
         </activity>
 
