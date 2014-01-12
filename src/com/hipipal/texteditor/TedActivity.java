@@ -103,7 +103,12 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 
 		// editor
 		mEditor = (AdvancedEditText) findViewById(R.id.editor);
-		mEditor.setCustomSelectionActionModeCallback(new ActionBarCallBack());
+		try {
+			if (AndroidCompat.SDK>=Build.VERSION_CODES.HONEYCOMB)
+				mEditor.setCustomSelectionActionModeCallback(new ActionBarCallBack());
+		} catch (Exception e) {
+			
+		}
 		// log output
 		//mLogField = (AdvancedEditText) findViewById(R.id.output_log);
 		//mLogField.setVisibility(View.GONE);
@@ -1504,6 +1509,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	}
 	
 	// http://developer.android.com/reference/android/view/KeyEvent.html
+	@SuppressLint("NewApi")
 	@Override
 	public boolean onKeyShortcut(int keyCode, KeyEvent event){
 		if(event.isCtrlPressed()){
