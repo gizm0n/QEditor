@@ -22,13 +22,17 @@ import greendroid.widget.item.DrawableItem;
 import greendroid.widget.item.TextItem;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -38,6 +42,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.InvalidRemoteException;
+import org.eclipse.jgit.api.errors.TransportException;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
 public class TedLocalActivity extends _ABaseAct implements Constants {
 	private static final String TAG = "local";
@@ -495,30 +506,30 @@ public class TedLocalActivity extends _ABaseAct implements Constants {
 						                sItem.setTag(1, fullfn);
 						                adapter.add(sItem);
 						}else if(filename.endsWith(".js")){
-							sItem = new DrawableItem(filename, R.drawable.js);
-			                sItem.setTag(0, "");
-			                sItem.setTag(1, fullfn);
-			                adapter.add(sItem);
+										sItem = new DrawableItem(filename, R.drawable.js);
+										sItem.setTag(0, "");
+										sItem.setTag(1, fullfn);
+										adapter.add(sItem);
 						}else if(filename.endsWith(".json")){
-							sItem = new DrawableItem(filename, R.drawable.json);
-			                sItem.setTag(0, "");
-			                sItem.setTag(1, fullfn);
-			                adapter.add(sItem);
+										sItem = new DrawableItem(filename, R.drawable.json);
+										sItem.setTag(0, "");
+										sItem.setTag(1, fullfn);
+										adapter.add(sItem);
 						}else if(filename.endsWith(".key")){ 
 						                sItem = new DrawableItem(filename, R.drawable.key);
 						                sItem.setTag(0, "");
 						                sItem.setTag(1, fullfn);
 						                adapter.add(sItem);
 						}else if(filename.endsWith(".lua")){
-							sItem = new DrawableItem(filename, R.drawable.lua);
-			                sItem.setTag(0, "");
-			                sItem.setTag(1, fullfn);
-			                adapter.add(sItem);
+										sItem = new DrawableItem(filename, R.drawable.lua);
+										sItem.setTag(0, "");
+										sItem.setTag(1, fullfn);
+										adapter.add(sItem);
 						}else if(filename.endsWith(".log")){
-							sItem = new DrawableItem(filename, R.drawable.log);
-			                sItem.setTag(0, "");
-			                sItem.setTag(1, fullfn);
-			                adapter.add(sItem);
+										sItem = new DrawableItem(filename, R.drawable.log);
+										sItem.setTag(0, "");
+										sItem.setTag(1, fullfn);
+										adapter.add(sItem);
 						}else if(filename.endsWith(".md")){
 						}else if(filename.endsWith(".mid")){ 
 						                sItem = new DrawableItem(filename, R.drawable.mid);
@@ -689,11 +700,8 @@ public class TedLocalActivity extends _ABaseAct implements Constants {
 						                sItem = new DrawableItem(filename, R.drawable.zip);
 						                sItem.setTag(0, "");
 						                sItem.setTag(1, fullfn);
-						                adapter.add(sItem);
-																				
-									}
-									
-									else{
+						                adapter.add(sItem);									
+									}else{
 										sItem = new DrawableItem(filename,R.drawable.file_text);
 										sItem.setTag(0, "");
 										sItem.setTag(1, fullfn);
@@ -951,4 +959,86 @@ public class TedLocalActivity extends _ABaseAct implements Constants {
     public void onUp(View v) {
     	onTop();
     }
+    public void cloneRepository() throws IOException, InvalidRemoteException, TransportException, GitAPIException{
+    	final Context context = this;
+    	LayoutInflater li = LayoutInflater.from(context);
+		View promptsView = li.inflate(R.layout.repo_pick, null);
+
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				context);
+
+		// set prompts.xml to alertdialog builder
+		alertDialogBuilder.setView(promptsView);
+
+		final EditText mRepoUrl = (EditText) promptsView.findViewById(R.id.repo_url);
+		final EditText mSaveRepoAs = (EditText) promptsView.findViewById(R.id.save_repo_as);
+		
+		// set dialog message
+		alertDialogBuilder
+			.setCancelable(false)
+			.setPositiveButton("OK",
+			  new DialogInterface.OnClickListener() {
+			    public void onClick(DialogInterface dialog,int id) {
+			    	  try {			    		 
+			    		  	String repo = mRepoUrl.getText().toString();
+					    	String repoName = mSaveRepoAs.getText().toString();
+					    	
+					    	if(repo != null && repoName != null){
+					    		File localPath = new File(getCurrentDir()+"/"+repoName);
+					    		localPath.mkdir();
+
+						    	System.out.println("Cloning from " + repo + " to " + localPath);
+						        Git.cloneRepository()
+						                .setURI(repo)
+						                .setDirectory(localPath)
+						                .call();
+
+						        // now open the created repository
+						        FileRepositoryBuilder builder = new FileRepositoryBuilder();
+						        Repository repository = builder.setGitDir(localPath)
+						                .readEnvironment() // scan environment GIT_* variables
+						                .findGitDir() // scan up the file system tree
+						                .build();
+
+						        System.out.println("Having repository: " + repository.getDirectory());
+
+						        repository.close();
+					    	}			    							    	
+					    						 					    	
+					        
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InvalidRemoteException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (TransportException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (GitAPIException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			    }
+			  })
+			.setNegativeButton("Cancel",
+			  new DialogInterface.OnClickListener() {
+			    public void onClick(DialogInterface dialog,int id) {
+				dialog.cancel();
+			    }
+			  });
+
+		// create alert dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+
+		// show it
+		alertDialog.show();
+    	
+    }
+    
+    public void cloneRepo(View v) throws InvalidRemoteException, TransportException, IOException, GitAPIException{
+    	//Toast.makeText(this, getCurrentDir(), Toast.LENGTH_SHORT).show();
+    	cloneRepository();
+    }
+    
 }

@@ -104,8 +104,15 @@
 		android:src="@drawable/ic_right" 
 		android:onClick="onForward"		
 		android:background="@drawable/transparent"
-		/>		
+		/>
 
+		<Button
+		    android:id="@+id/cloneRepo"
+		    android:layout_width="0dp"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+		    android:onClick="cloneRepo"	
+		    android:text="clone" />
 
 		</LinearLayout>		
 </LinearLayout>

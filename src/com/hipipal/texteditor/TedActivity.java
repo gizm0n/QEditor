@@ -60,6 +60,7 @@ import greendroid.widget.ActionBarItem;
 import greendroid.widget.QuickActionWidget;
 //import greendroid.widget.QuickActionWidget.OnQuickActionClickListener;
 
+
 public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		OnClickListener {
 	public static final String TAG = "TED";
@@ -153,7 +154,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		}
 		
 		/**
-		 * Create a share Intent
+		 * Create a share Intent for the text 
 		 */
 		public void shareData()
 		{
