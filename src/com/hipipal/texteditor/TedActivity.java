@@ -6,11 +6,16 @@ import static fr.xgouchet.androidlib.data.FileUtils.renameItem;
 import static fr.xgouchet.androidlib.ui.Toaster.showToast;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
+import com.hipipal.texteditor._ABaseAct.MyQuickAction;
 import com.hipipal.texteditor.common.Constants;
 import com.hipipal.texteditor.common.RecentFiles;
 import com.hipipal.texteditor.common.Settings;
@@ -37,6 +42,7 @@ import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -48,6 +54,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -57,8 +64,11 @@ import de.neofonie.mobile.app.android.widget.crouton.Style;
 import com.hipipal.texteditor.BuildConfig;
 
 import greendroid.widget.ActionBarItem;
+import greendroid.widget.QuickAction;
+import greendroid.widget.QuickActionBar;
 import greendroid.widget.QuickActionWidget;
 //import greendroid.widget.QuickActionWidget.OnQuickActionClickListener;
+import greendroid.widget.QuickActionWidget.OnQuickActionClickListener;
 
 
 public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
@@ -66,7 +76,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	public static final String TAG = "TED";
     protected QuickActionWidget mBarM;
     private int exitCount = 0;
-
+    private QuickActionWidget mBar;
     //AdvancedEditText mLogField;
 	/**
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -86,9 +96,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
         ImageButton homeBtn = (ImageButton)findViewById(R.id.gd_action_bar_home_item);
         homeBtn.setImageResource(R.drawable.icon_nb);
 
-        if (code.equals("texteditor")) {
-	        
-	        
+        if (code.equals("texteditor")) {       
 			checkUpdate(CONF.BASE_PATH);
         }
 
@@ -121,17 +129,159 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		findViewById(R.id.buttonSearchNext).setOnClickListener(this);
 		findViewById(R.id.buttonSearchPrev).setOnClickListener(this);
 		
-		
+		mBar = new QuickActionBar(this);
+        mBar.addQuickAction(new MyQuickAction(this, R.drawable.ic_delete, R.string.line_picker_title));
+        mBar.addQuickAction(new MyQuickAction(this, R.drawable.code_snippet, R.string.code_snippets));
+        mBar.addQuickAction(new MyQuickAction(this, R.drawable.ic_menu_share, R.string.share));
+        mBar.setOnQuickActionClickListener(mActionListener);
+        
         MyApp.getInstance().addActivity(this, CONF.BASE_PATH,""); 
         if (code.equals("texteditor")) {
 	        MNApp mnApp = (MNApp) this.getApplication();
 	        mnApp.trackPageView("/"+NAction.getCode(getApplicationContext())+"/dashboard");
         }
-        
-        
-
+        ImageButton mMenuButton = (ImageButton) findViewById(R.id.help_button);
+        mMenuButton.setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				mBar.show(v);
+				return false;				
+			}
+		});
+        String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/com.hipipal.qpyplus";
+        String path = baseDir + "/snippets";
+		File folder = new File(path);
+		if (folder.exists() && folder.isDirectory()) {
+		} else {
+			folder.mkdir();
+			String file1 = LoadDataFromAssets("The MIT License (MIT)");
+			String file2 = LoadDataFromAssets("Apache License, Version 2.0");
+			writeToFile(path + "/Apache License", file1);
+			writeToFile(path + "/The MIT License", file2);
+		}
 		
 	}
+	private OnQuickActionClickListener mActionListener = new OnQuickActionClickListener() {
+        @Override
+		public void onQuickActionClicked(QuickActionWidget widget, int position) {
+        	switch (position) {
+	        	case 0:
+	        		goToLine();
+                    break;
+        		case 1:
+        			SnippetsList();
+        			break;
+        		case 2:
+        			break;
+        		case 3:
+                    break;
+                default:
+        	}
+        }
+    };
+    /**
+     * Create a list of snippets 
+     */
+    public void SnippetsList() {
+		List<String> listItems = new ArrayList<String>();
+		String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/com.hipipal.qpyplus";
+		String path = baseDir + "/snippets/";
+		String files;
+		File folder = new File(path);
+		if (folder.exists()) {
+			File[] listOfFiles = folder.listFiles();
+			for (int i = 0; i < listOfFiles.length; i++) {
+				if (listOfFiles[i].isFile()) {
+					files = listOfFiles[i].getName();
+					listItems.add(files);
+				}
+			}
+		}
+		
+		final CharSequence colors[] = listItems.toArray(new CharSequence[listItems.size()]);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Snippets");
+		builder.setItems(colors, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+//				Toast.makeText(getApplicationContext(), colors[which],
+//						Toast.LENGTH_SHORT).show();
+				try {
+					insertSnippet(""+colors[which]);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		builder.show();
+	}
+    /**
+     * 
+     * @param Snippet to intsert into EditText 
+     * @throws IOException
+     */
+    public void insertSnippet(String snippetName) throws IOException{
+		String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/com.hipipal.qpyplus";
+		String path = baseDir + "/snippets/";
+		//int start = mEditor.getSelectionStart(); //this is to get the the cursor position
+		String s = readFile(path+snippetName);
+		mEditor.getText().insert(0, s);
+	}
+    /**
+     * Save code snippet 
+     */
+    public void getInfo() {
+		int startSelection = mEditor.getSelectionStart();
+		int endSelection = mEditor.getSelectionEnd();
+		final String selectedText = mEditor.getText().toString().substring(startSelection, endSelection);
+		
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Save as");
+		final EditText input = new EditText(this);
+		input.setSingleLine(true);
+		input.setText("untitled");
+		input.setSelection(input.getText().length());
+		alert.setView(input);
+		input.addTextChangedListener(new TextWatcher() {
+			public void afterTextChanged(Editable s) {}
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+			
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/com.hipipal.qpyplus";
+				String path = baseDir + "/snippets/";
+				File file = new File("" + path + s);
+				if (file.exists() && !file.isDirectory()) {
+					input.setBackgroundResource(R.drawable.red);
+				} else {
+					input.setBackgroundResource(R.drawable.green);
+				}
+			}
+		});
+
+		alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+			int startSelection = mEditor.getSelectionStart();
+			int endSelection = mEditor.getSelectionEnd();
+
+			final String selectedText = mEditor.getText().toString().substring(startSelection, endSelection);
+			public void onClick(DialogInterface dialog, int whichButton) {
+				
+				String value = input.getText().toString();
+				Toast.makeText(getApplicationContext(), "Saved as: " + value,
+						Toast.LENGTH_SHORT).show();
+				String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/com.hipipal.qpyplus";
+				String saveName = baseDir + "/snippets/" + value;
+				writeToFile(saveName, selectedText);
+			}
+		});
+
+		alert.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {}
+				});
+		alert.show();
+	}
+
 	/**
 	 * The contextual action bar (CAB)
 	 * @author kyle kersey
@@ -166,6 +316,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 			String selectedText = et.getText().toString().substring(startSelection, endSelection); 
 			/**
 			 * Detect if the text is selected
+			 * This needs improvement 
 			 */
 			if(selectedText.length() != 0){
 				Intent sendIntent = new Intent();
@@ -180,9 +331,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 				sendIntent.putExtra(Intent.EXTRA_TEXT, dataToShare);
 				sendIntent.setType("text/plain");
 				startActivity(sendIntent);
-			}
-					
-			//Toast.makeText(getApplicationContext(), selectedText, Toast.LENGTH_SHORT).show();
+			}				
 		}
 		
 
@@ -190,20 +339,25 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		@Override
 		public boolean onCreateActionMode(ActionMode mode, Menu menu)
 		{
-			// TODO Auto-generated method stub
+			//Change the button image 
 			mode.getMenuInflater().inflate(R.menu.action_bar_menu, menu);
-			//menu.add(0, 1, 0, "Info");
 			ImageButton helpButton = (ImageButton) findViewById(R.id.help_button);
 			helpButton.setImageResource(R.drawable.help_icon);
+			
+			ImageButton saveCode = (ImageButton) findViewById(R.id.save_as);
+			saveCode.setImageResource(R.drawable.add_code);
 			return true;
 		}
 
 		@Override
 		public void onDestroyActionMode(ActionMode mode)
 		{
-			// TODO Auto-generated method stub
+			//Change the button image back 
 			ImageButton helpButton = (ImageButton) findViewById(R.id.help_button);
 			helpButton.setImageResource(R.drawable.ic_collections_history);
+			
+			ImageButton saveCode = (ImageButton) findViewById(R.id.save_as);
+			saveCode.setImageResource(R.drawable.ic_save_as);
 
 		}
 
@@ -211,7 +365,6 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu)
 		{
 			// TODO Auto-generated method stub
-
 			return false;
 		}
 	}
@@ -1471,7 +1624,17 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		saveContent();
 	}
 	public void onSaveAs(View v) {
-		saveContentAs();
+		int startSelection=mEditor.getSelectionStart();
+		int endSelection=mEditor.getSelectionEnd();
+		String selectedText = mEditor.getText().toString().substring(startSelection, endSelection); 
+		/**
+		 * Detect if the text is selected
+		 */
+		if(selectedText.length() != 0){
+			getInfo();
+		}else{
+			saveContentAs();
+		}
 
 	}
 	public void onHistory(View v) {
@@ -1538,6 +1701,64 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB)
 			invalidateOptionsMenu();
 	}
+	/**
+	 * Load File from Assets into String 
+	 * @param File to load 
+	 * @return File contents as String 
+	 */
+	public String LoadDataFromAssets(String inFile) {
+		String tContents = "";
+
+		try {
+			InputStream stream = getAssets().open(inFile);
+			int size = stream.available();
+			byte[] buffer = new byte[size];
+			stream.read(buffer);
+			stream.close();
+			tContents = new String(buffer);
+		} catch (IOException e) {
+		}
+		return tContents;
+	}
+	/**
+	 * Read file to String 
+	 * @param path of file 
+	 * @return contents of file 
+	 * @throws IOException
+	 */
+	private String readFile(String pathname) throws IOException {
+
+	    File file = new File(pathname);
+	    StringBuilder fileContents = new StringBuilder((int)file.length());
+	    Scanner scanner = new Scanner(file);
+	    String lineSeparator = System.getProperty("line.separator");
+
+	    try {
+	        while(scanner.hasNextLine()) {        
+	            fileContents.append(scanner.nextLine() + lineSeparator);
+	        }
+	        return fileContents.toString();
+	    } finally {
+	        scanner.close();
+	    }
+	}
+	/**
+	 * Write String to File 
+	 * @param path of file to write to 
+	 * @param String to write to file 
+	 */
+	public void writeToFile(String filePath, String data) {
+		try {
+			FileOutputStream fOut = new FileOutputStream(filePath);
+            fOut.write(data.getBytes());
+            fOut.flush();
+            fOut.close();
+		} catch (IOException iox) {
+			iox.printStackTrace();
+		}
+
+	}
+
 	
 	/**
 	 * Defines the keyboard layout 

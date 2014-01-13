@@ -115,5 +115,6 @@
 	<string name="share">Share</string>
 	<string name="line_picker_title">Go to Line</string>
 	<string name="line_picker_hint">Line number less than </string>
+	<string name="code_snippets">Code Snippets</string>
 
 </resources>
