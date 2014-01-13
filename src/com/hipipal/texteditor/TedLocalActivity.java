@@ -29,8 +29,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -616,7 +614,7 @@ public class TedLocalActivity extends _ABaseAct implements Constants {
 						                adapter.add(sItem);
 						}else if(filename.endsWith(".pub")){
 						}else if(filename.endsWith(".py")){ 
-						                sItem = new DrawableItem(filename, R.drawable.python_icon);
+						                sItem = new DrawableItem(filename, R.drawable.py);
 						                sItem.setTag(0, "");
 						                sItem.setTag(1, fullfn);
 						                adapter.add(sItem);

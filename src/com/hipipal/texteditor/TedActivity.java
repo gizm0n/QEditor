@@ -127,6 +127,8 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	        MNApp mnApp = (MNApp) this.getApplication();
 	        mnApp.trackPageView("/"+NAction.getCode(getApplicationContext())+"/dashboard");
         }
+        
+        
 
 		
 	}
@@ -144,7 +146,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item)
 		{			
 			// TODO Auto-generated method stub
-			if (item.getItemId() ==R.id.shareText)
+			if (item.getItemId()==R.id.shareText)
 			{
 					shareData();
 			}// else if (item.getItemId() == R.id.findText) {
@@ -191,6 +193,8 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 			// TODO Auto-generated method stub
 			mode.getMenuInflater().inflate(R.menu.action_bar_menu, menu);
 			//menu.add(0, 1, 0, "Info");
+			ImageButton helpButton = (ImageButton) findViewById(R.id.help_button);
+			helpButton.setImageResource(R.drawable.help_icon);
 			return true;
 		}
 
@@ -198,6 +202,8 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		public void onDestroyActionMode(ActionMode mode)
 		{
 			// TODO Auto-generated method stub
+			ImageButton helpButton = (ImageButton) findViewById(R.id.help_button);
+			helpButton.setImageResource(R.drawable.ic_collections_history);
 
 		}
 
@@ -209,6 +215,8 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 			return false;
 		}
 	}
+	
+	
 	/**
 	 * Set the search using the selected text
 	 */
@@ -550,10 +558,27 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	/**
+	 * If no text is selected the button activates the settings screen
+	 * If text is selected it activates the help menu 
+	 * @param v
+	 */
 	
 	public void onSetting(View v) {
-		Intent intent = new Intent(this, TedSettingsActivity.class);
-		startActivity(intent);
+		int startSelection=mEditor.getSelectionStart();
+		int endSelection=mEditor.getSelectionEnd();
+		String selectedText = mEditor.getText().toString().substring(startSelection, endSelection); 
+		if(selectedText.length() != 0){
+			//Toast.makeText(this, selectedText, Toast.LENGTH_SHORT).show();
+			String Search = "http://docs.python.org/2/search.html?q=" + selectedText;
+			Intent intent = new Intent(getApplicationContext(), MTubebook.class);
+			Uri data = Uri.parse(Search);
+			intent.setData(data);
+			startActivity(intent);
+		}else{
+			Intent intent = new Intent(this, TedSettingsActivity.class);
+			startActivity(intent);
+		}
 	}
 
 	/**
