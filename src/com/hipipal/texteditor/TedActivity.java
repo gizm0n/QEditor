@@ -4,6 +4,10 @@ import static fr.xgouchet.androidlib.data.FileUtils.deleteItem;
 import static fr.xgouchet.androidlib.data.FileUtils.getCanonizePath;
 import static fr.xgouchet.androidlib.data.FileUtils.renameItem;
 import static fr.xgouchet.androidlib.ui.Toaster.showToast;
+import greendroid.widget.ActionBarItem;
+import greendroid.widget.QuickActionBar;
+import greendroid.widget.QuickActionWidget;
+import greendroid.widget.QuickActionWidget.OnQuickActionClickListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,18 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import com.hipipal.texteditor._ABaseAct.MyQuickAction;
-import com.hipipal.texteditor.common.Constants;
-import com.hipipal.texteditor.common.RecentFiles;
-import com.hipipal.texteditor.common.Settings;
-import com.hipipal.texteditor.common.TedChangelog;
-import com.hipipal.texteditor.common.TextFileUtils;
-import com.hipipal.texteditor.ui.view.AdvancedEditText;
-import com.hipipal.texteditor.undo.TextChangeWatcher;
-import com.zuowuxuxi.base.MyApp;
-import com.zuowuxuxi.base._WBase;
-import com.zuowuxuxi.util.NAction;
-
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -36,11 +28,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-//import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Editable;
@@ -59,18 +50,28 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.hipipal.texteditor.common.Constants;
+import com.hipipal.texteditor.common.RecentFiles;
+import com.hipipal.texteditor.common.Settings;
+import com.hipipal.texteditor.common.TedChangelog;
+import com.hipipal.texteditor.common.TextFileUtils;
+import com.hipipal.texteditor.ui.view.AdvancedEditText;
+import com.hipipal.texteditor.undo.TextChangeWatcher;
+import com.zuowuxuxi.base.MyApp;
+import com.zuowuxuxi.base._WBase;
+import com.zuowuxuxi.util.NAction;
+
 import de.neofonie.mobile.app.android.widget.crouton.Crouton;
 import de.neofonie.mobile.app.android.widget.crouton.Style;
-import com.hipipal.texteditor.BuildConfig;
-
-import greendroid.widget.ActionBarItem;
-import greendroid.widget.QuickAction;
-import greendroid.widget.QuickActionBar;
-import greendroid.widget.QuickActionWidget;
+//import android.content.res.Configuration;
 //import greendroid.widget.QuickActionWidget.OnQuickActionClickListener;
-import greendroid.widget.QuickActionWidget.OnQuickActionClickListener;
 
 
+/**
+ * @author River
+ *
+ */
 public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		OnClickListener {
 	public static final String TAG = "TED";
@@ -172,12 +173,14 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
         			SnippetsList();
         			break;
         		case 2:
+        			shareData();
         			break;
         		case 3:
                     break;
                 default:
         	}
         }
+
     };
     /**
      * Create a list of snippets 
@@ -218,6 +221,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	}
     /**
      * 
+     * @param snippetName 
      * @param Snippet to intsert into EditText 
      * @throws IOException
      */
@@ -232,9 +236,9 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
      * Save code snippet 
      */
     public void getInfo() {
-		int startSelection = mEditor.getSelectionStart();
-		int endSelection = mEditor.getSelectionEnd();
-		final String selectedText = mEditor.getText().toString().substring(startSelection, endSelection);
+//		int startSelection = mEditor.getSelectionStart();
+//		int endSelection = mEditor.getSelectionEnd();
+//		final String selectedText = mEditor.getText().toString().substring(startSelection, endSelection);
 		
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("Save as");
@@ -243,21 +247,21 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		input.setText("untitled");
 		input.setSelection(input.getText().length());
 		alert.setView(input);
-		input.addTextChangedListener(new TextWatcher() {
-			public void afterTextChanged(Editable s) {}
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-			
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/com.hipipal.qpyplus";
-				String path = baseDir + "/snippets/";
-				File file = new File("" + path + s);
-				if (file.exists() && !file.isDirectory()) {
-					input.setBackgroundResource(R.drawable.red);
-				} else {
-					input.setBackgroundResource(R.drawable.green);
-				}
-			}
-		});
+//		input.addTextChangedListener(new TextWatcher() {
+//			public void afterTextChanged(Editable s) {}
+//			public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+//			
+//			public void onTextChanged(CharSequence s, int start, int before, int count) {
+//				String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/com.hipipal.qpyplus";
+//				String path = baseDir + "/snippets/";
+//				File file = new File("" + path + s);
+//				if (file.exists() && !file.isDirectory()) {
+//					input.setBackgroundResource(R.drawable.red);
+//				} else {
+//					input.setBackgroundResource(R.drawable.green);
+//				}
+//			}
+//		});
 
 		alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
 			int startSelection = mEditor.getSelectionStart();
@@ -308,31 +312,6 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		/**
 		 * Create a share Intent for the text 
 		 */
-		public void shareData()
-		{
-			EditText et=(EditText)findViewById(R.id.editor);
-			int startSelection=et.getSelectionStart();
-			int endSelection=et.getSelectionEnd();
-			String selectedText = et.getText().toString().substring(startSelection, endSelection); 
-			/**
-			 * Detect if the text is selected
-			 * This needs improvement 
-			 */
-			if(selectedText.length() != 0){
-				Intent sendIntent = new Intent();
-				sendIntent.setAction(Intent.ACTION_SEND);
-				sendIntent.putExtra(Intent.EXTRA_TEXT, selectedText);
-				sendIntent.setType("text/plain");
-				startActivity(sendIntent);
-			}else{
-				String dataToShare = et.getText().toString();
-				Intent sendIntent = new Intent();
-				sendIntent.setAction(Intent.ACTION_SEND);
-				sendIntent.putExtra(Intent.EXTRA_TEXT, dataToShare);
-				sendIntent.setType("text/plain");
-				startActivity(sendIntent);
-			}				
-		}
 		
 
 		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -369,6 +348,31 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		}
 	}
 	
+	public void shareData()
+	{
+		EditText et=(EditText)findViewById(R.id.editor);
+		int startSelection=et.getSelectionStart();
+		int endSelection=et.getSelectionEnd();
+		String selectedText = et.getText().toString().substring(startSelection, endSelection); 
+		/**
+		 * Detect if the text is selected
+		 * This needs improvement 
+		 */
+		if(selectedText.length() != 0){
+			Intent sendIntent = new Intent();
+			sendIntent.setAction(Intent.ACTION_SEND);
+			sendIntent.putExtra(Intent.EXTRA_TEXT, selectedText);
+			sendIntent.setType("text/plain");
+			startActivity(sendIntent);
+		}else{
+			String dataToShare = et.getText().toString();
+			Intent sendIntent = new Intent();
+			sendIntent.setAction(Intent.ACTION_SEND);
+			sendIntent.putExtra(Intent.EXTRA_TEXT, dataToShare);
+			sendIntent.setType("text/plain");
+			startActivity(sendIntent);
+		}				
+	}
 	
 	/**
 	 * Set the search using the selected text
@@ -1203,6 +1207,9 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		promptSaveDirty();
 	}
 	
+	/**
+	 * @param v
+	 */
 	public void onBrowser(View v) {
 		Intent intent = new Intent(this, MTubebook.class);
 		startActivity(intent);
@@ -1316,6 +1323,9 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		return super.onKeyDown(keyCoder, event);
 	}
 	
+	/**
+	 * 
+	 */
 	@SuppressWarnings("deprecation")
 	public void endScreen() {
 		WBase.setTxtDialogParam2(0, R.string.confirm_exit,  getString(R.string.feed_back), getString(R.string.follow_community), "",getString(R.string.feedback_btn), getString(R.string.follow_community_btn),"",
@@ -1329,12 +1339,18 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		dialogIndex++;
 	}
 	
+	/**
+	 * @param v
+	 */
 	public void onExitPrompt1(View v) {
 
 		Intent intent = NAction.openRemoteLink(getApplicationContext(), CONF.COMMUNITY_LINK);
 		startActivity(intent);
 	}
 	
+	/**
+	 * @param v
+	 */
 	public void onExitPrompt2(View v) {
 		String url = NAction.getExtP(this, "conf_promp3_link");
 		if (url.equals("")) {
@@ -1493,6 +1509,9 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		}
 	}
 	
+	/**
+	 * @param v
+	 */
 	public void onLeft(View v) {
 		leftIndent();
 	}
@@ -1508,6 +1527,9 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 			}
 		}
 	}
+	/**
+	 * @param v
+	 */
 	public void onRight(View v) {
 		rightIndnent();
 	}
@@ -1591,6 +1613,9 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		builder.show();
 	}
 	
+	/**
+	 * @param v
+	 */
 	public void onPlay(View v) {
 		runScript();
 	}
@@ -1616,13 +1641,24 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 			}
 		}
 	}
+	/**
+	 * Receive search click
+	 * @param v
+	 */
 	public void onSearch(View v) {
 		search();
 	}
 	
+	/**
+	 * Receive save click
+	 * @param v
+	 */
 	public void onSave(View v) {
 		saveContent();
 	}
+	/** Receive save as click
+	 * @param v
+	 */
 	public void onSaveAs(View v) {
 		int startSelection=mEditor.getSelectionStart();
 		int endSelection=mEditor.getSelectionEnd();
@@ -1637,6 +1673,10 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		}
 
 	}
+	/**
+	 * Receive history click
+	 * @param v
+	 */
 	public void onHistory(View v) {
 		openRecentFile();
 
@@ -1703,7 +1743,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	}
 	/**
 	 * Load File from Assets into String 
-	 * @param File to load 
+	 * @param inFile File to load 
 	 * @return File contents as String 
 	 */
 	public String LoadDataFromAssets(String inFile) {
@@ -1732,7 +1772,6 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	    StringBuilder fileContents = new StringBuilder((int)file.length());
 	    Scanner scanner = new Scanner(file);
 	    String lineSeparator = System.getProperty("line.separator");
-
 	    try {
 	        while(scanner.hasNextLine()) {        
 	            fileContents.append(scanner.nextLine() + lineSeparator);
@@ -1744,8 +1783,8 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	}
 	/**
 	 * Write String to File 
-	 * @param path of file to write to 
-	 * @param String to write to file 
+	 * @param filePath path of file to write to 
+	 * @param data String to write to file 
 	 */
 	public void writeToFile(String filePath, String data) {
 		try {
