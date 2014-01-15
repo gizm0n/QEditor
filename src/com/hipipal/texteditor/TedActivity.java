@@ -1324,19 +1324,14 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	public void rightIndnent(){
 		int startSelection= mEditor.getSelectionStart();
 		int endSelection=mEditor.getSelectionEnd();
-		String selectedText = mEditor.getText().toString().substring(startSelection, endSelection);
+		String selectedText = mEditor.getText().toString().substring(startSelection, endSelection).trim();
 		Editable editable = mEditor.getText();
+		Log.d(TAG, "rightIndnent:"+startSelection+"-"+endSelection+"-"+selectedText.length());
 		if(selectedText.length() != 0){
-			String startData = mEditor.getText().toString();
-			String textData = startData.substring(0, startSelection); 
-			if(textData.contains("\n")){
-				int newLineIndex = textData.lastIndexOf("\n");
-				editable.replace(newLineIndex, newLineIndex, "\n    ");
-			}else{
-				editable.insert(0, "    ");
-			}
-			String indentedText = selectedText.replace("\n", "\n    ");
+			// head
+			String indentedText = selectedText.replaceAll("^", "    ").replace("\n", "\n    ");
 			editable.replace(startSelection, endSelection, indentedText);
+
 		}else{
 			int index = mEditor.getSelectionStart();
 			editable.insert(index, "    ");
