@@ -1309,13 +1309,23 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		leftIndent();
 	}
 	public void leftIndent(){
-		int index = mEditor.getSelectionStart();
+		int startSelection = mEditor.getSelectionStart();
+		int endSelection=mEditor.getSelectionEnd();
+
+		String selectedText = mEditor.getText().toString().substring(startSelection, endSelection).trim();
+
+
 		Editable editable = mEditor.getText();
-		if (index>=4) {
-			if (editable.subSequence(index -4, index).toString().equals("    ")) {
-				editable.delete(index-4, index);
+		if(selectedText.length() != 0){
+			String indentedText = selectedText.replaceAll("\n    ", "\n");
+			editable.replace(startSelection, endSelection, indentedText);
+		}
+		if (startSelection>=4) {
+			if (editable.subSequence(startSelection -4, startSelection).toString().equals("    ")) {
+				editable.delete(startSelection-4, startSelection);
 			}
 		}
+
 	}
 	public void onRight(View v) {
 		rightIndnent();
@@ -1329,7 +1339,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		Log.d(TAG, "rightIndnent:"+startSelection+"-"+endSelection+"-"+selectedText.length());
 		if(selectedText.length() != 0){
 			// head
-			String indentedText = selectedText.replaceAll("^", "    ").replace("\n", "\n    ");
+			String indentedText = selectedText.replaceAll("^", "    ").replaceAll("\n", "\n    ");
 			editable.replace(startSelection, endSelection, indentedText);
 
 		}else{
