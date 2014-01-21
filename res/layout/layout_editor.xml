@@ -21,14 +21,7 @@
 
         <requestFocus />
     </com.hipipal.texteditor.ui.view.AdvancedEditText>
-    <com.jeremyfeinstein.slidingmenu.lib.SlidingMenu
-    xmlns:sliding="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/slidingmenulayout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-        
-    </com.jeremyfeinstein.slidingmenu.lib.SlidingMenu>
-
+    
 	<LinearLayout
 		android:id="@+id/return_bar_box"
 		android:layout_width="fill_parent"

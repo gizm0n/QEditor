@@ -462,7 +462,6 @@ public class AdvancedEditText extends EditText implements Constants,
 		"ZeroDivisionError)\\b" );
 	private static final Pattern comments = Pattern.compile(
 		"/\\*(?:.|[\\n\\r])*?\\*/|"+
-		"//.*|"+
 		"#.*\n|"+
 		"\"\"\"(?:.|[\\n\\r])*?\"\"\"|"+
 		"\'\'\'(?:.|[\\n\\r])*?\'\'\'");

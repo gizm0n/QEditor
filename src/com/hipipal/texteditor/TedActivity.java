@@ -58,7 +58,6 @@ import com.hipipal.texteditor.common.TedChangelog;
 import com.hipipal.texteditor.common.TextFileUtils;
 import com.hipipal.texteditor.ui.view.AdvancedEditText;
 import com.hipipal.texteditor.undo.TextChangeWatcher;
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.zuowuxuxi.base.MyApp;
 import com.zuowuxuxi.base._WBase;
 import com.zuowuxuxi.util.NAction;
@@ -136,16 +135,6 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
         mBar.addQuickAction(new MyQuickAction(this, R.drawable.code_snippet, R.string.code_snippets));
         mBar.addQuickAction(new MyQuickAction(this, R.drawable.ic_menu_share, R.string.share));
         mBar.setOnQuickActionClickListener(mActionListener);
-        
-//        SlidingMenu menu = new SlidingMenu(this);
-//        menu.setMode(SlidingMenu.LEFT);
-//        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-//        menu.setShadowWidthRes(R.dimen.shadow_width);
-//        menu.setShadowDrawable(R.drawable.shadow);
-//        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-//        menu.setFadeDegree(0.35f);
-//        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-//        menu.setMenu(R.layout.menu);
         
         MyApp.getInstance().addActivity(this, CONF.BASE_PATH,""); 
         if (code.equals("texteditor")) {
