@@ -412,10 +412,10 @@ public class AdvancedEditText extends EditText implements Constants,
 
 	private static final int COLOR_ERROR = 0x80ff0000;
 	//private static final int COLOR_NUMBER = 0xff7ba212;
-	private static final int COLOR_KEYWORD = 0xff399ed7;
-	private static final int COLOR_BUILTIN = 0xff7ba212;
+	private static final int COLOR_KEYWORD = 0xff7ba212;
+	private static final int COLOR_BUILTIN = 0xffd79e39;
 	private static final int COLOR_COMMENT = 0xff808080;
-	private static final int COLOR_QUOTE = 0xffd79e39;
+	private static final int COLOR_QUOTE = 0xff399ed7;
 
 	private static final Pattern line = Pattern.compile(
 		".*\\n" );
@@ -470,8 +470,8 @@ public class AdvancedEditText extends EditText implements Constants,
 		"[\\t ]+$",
 		Pattern.MULTILINE );
 	private static final Pattern quotes = Pattern.compile(
-			"\"([^\"])*\"|"+
-			"\'([^\'])*\'"
+			"\"([^[\"\\s]])+\"|"+
+			"\'([^[\'\\s]])+\'"
 			);
 
 	private final Handler updateHandler = new Handler();
