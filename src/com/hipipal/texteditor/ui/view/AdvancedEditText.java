@@ -415,7 +415,7 @@ public class AdvancedEditText extends EditText implements Constants,
 	private static final int COLOR_KEYWORD = 0xff399ed7;
 	private static final int COLOR_BUILTIN = 0xffd79e39;
 	private static final int COLOR_COMMENT = 0xff808080;
-	private static final int COLOR_QUOTE = 0xffa500;
+	private static final int COLOR_QUOTE = 0xffd79e39;
 
 	private static final Pattern line = Pattern.compile(
 		".*\\n" );
