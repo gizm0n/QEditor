@@ -678,8 +678,8 @@ public class AdvancedEditText extends EditText implements Constants,
 					m.find(); )
 					e.setSpan(
 						new ForegroundColorSpan( COLOR_QUOTE ),
-						m.start()-1,
-						m.end()+1,
+						m.start(),
+						m.end(),
 						Spanned.SPAN_EXCLUSIVE_EXCLUSIVE );
 		}
 		catch( Exception ex )
