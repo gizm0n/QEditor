@@ -470,8 +470,8 @@ public class AdvancedEditText extends EditText implements Constants,
 		"[\\t ]+$",
 		Pattern.MULTILINE );
 	private static final Pattern quotes = Pattern.compile(
-			"\"([^[\"\\s]])+\"|"+
-			"\'([^[\'\\s]])+\'"
+			"\"([^[\"\\n]])+\"|"+
+			"\'([^[\'\\n]])+\'"
 			);
 
 	private final Handler updateHandler = new Handler();
