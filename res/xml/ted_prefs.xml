@@ -109,5 +109,4 @@
                 android:title="@string/config_title_use_home_page" />
         </PreferenceScreen-->
     </PreferenceCategory>
-
 </PreferenceScreen>

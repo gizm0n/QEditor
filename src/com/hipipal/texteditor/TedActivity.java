@@ -149,6 +149,16 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 				return false;				
 			}
 		});
+        ImageButton mRunButton = (ImageButton) findViewById(R.id.play_btn);
+        mRunButton.setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(getApplicationContext(), RunRules.class);
+				startActivity(intent);
+				return false;				
+			}
+		});
         String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/com.hipipal.qpyplus";
         String path = baseDir + "/snippets";
 		File folder = new File(path);
@@ -1207,6 +1217,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 
 		promptSaveDirty();
 	}
+		
 	
 	/**
 	 * @param v

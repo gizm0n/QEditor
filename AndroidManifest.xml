@@ -176,6 +176,13 @@
             android:label="@string/title_about"
             android:windowSoftInputMode="stateHidden" >
         </activity>
+        
+        <!-- Ted Run Rules activity -->
+        <activity
+            android:name=".RunRules"
+            android:label="Run Rules"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
 
         <!-- Ted Configure widget activity -->
         <activity
