@@ -1813,6 +1813,8 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	
 	/**
 	 * Defines the keyboard layout 
+	 * @author kyle kersey
+	 * http://developer.android.com/reference/android/view/KeyEvent.html
 	 */
 	@Override
 	public boolean onKeyShortcut(int keyCode, KeyEvent event){
@@ -1846,6 +1848,13 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 				break;
 			}
 		}
+		switch (keyCode) {
+        case KeyEvent.KEYCODE_TAB:
+        	rightIndnent();
+            break;
+        default:
+        	  break;
+    }
 		return false;
 	}
 	
