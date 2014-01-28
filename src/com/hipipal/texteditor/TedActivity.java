@@ -1848,6 +1848,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 				break;
 			}
 		}
+		 Log.d(TAG, "TAG INFORMATION keycode:"+keyCode); 
 		switch (keyCode) {
         case KeyEvent.KEYCODE_TAB:
         	rightIndnent();
