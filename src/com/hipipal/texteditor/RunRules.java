@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,7 +31,7 @@ import android.widget.ListView;
 import android.widget.Toast;
  
 /**
- * @author kyle
+ * @author kyle kersey
  *
  */
 public class RunRules extends ListActivity {
@@ -145,6 +146,27 @@ public class RunRules extends ListActivity {
 		alertDialogBuilder.setView(promptsView);
 
 		final EditText shouldEndWith = (EditText) promptsView.findViewById(R.id.should_endwith);
+		final Button pickAppButton = (Button) promptsView.findViewById(R.id.pick_app_button);
+		pickAppButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+				
+				// http://developer.android.com/training/basics/intents/sending.html
+				// Verify it resolves
+				PackageManager packageManager = getPackageManager();
+				List<ResolveInfo> activities = packageManager.queryIntentActivities(mainIntent, 0);
+				boolean isIntentSafe = activities.size() > 0;
+				Intent chooser = Intent.createChooser(mainIntent, "Pick a App");
+
+				// Start an activity if it's safe
+				if (isIntentSafe) {
+				    startActivity(mainIntent);
+				}
+			}
+		});
 		
 		
 		// set dialog message
