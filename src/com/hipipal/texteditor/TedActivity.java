@@ -1543,12 +1543,12 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	 * @param v
 	 */
 	public void onRight(View v) {
-		rightIndnent();
+		rightIndent();
 	}
 	/**
 	 * Indent the text right
 	 */
-	public void rightIndnent(){
+	public void rightIndent(){
 		int startSelection= mEditor.getSelectionStart();
 		int endSelection=mEditor.getSelectionEnd();
 		String selectedText = mEditor.getText().toString().substring(startSelection, endSelection);
@@ -1839,7 +1839,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 				leftIndent();
 				break;
 			case KeyEvent.KEYCODE_RIGHT_BRACKET:
-				rightIndnent();
+				rightIndent();
 				break;
 			case KeyEvent.KEYCODE_R:
 				runScript();
@@ -1851,7 +1851,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		 Log.d(TAG, "TAG INFORMATION keycode:"+keyCode); 
 		switch (keyCode) {
         case KeyEvent.KEYCODE_TAB:
-        	rightIndnent();
+        	rightIndent();
             break;
         default:
         	  break;
