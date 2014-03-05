@@ -104,7 +104,7 @@
 	<string name="pls_install_a8_play">Please install A8 Video Player first</string>
 	<string name="download_as">Download and save as</string>
 	<string name="err_not_input">Please input the keyword to search</string>    
-	<string name="info_browser">Browser</string>    
+	<string name="info_browser">QBrowser</string>    
 	<string name="pls_open_file">No file yet</string>
 
 	<string name="support_intro">It\'s not Python / HTML file</string>
