@@ -116,5 +116,10 @@
 	<string name="line_picker_title">Go to Line</string>
 	<string name="line_picker_hint">Line number less than </string>
 	<string name="code_snippets">Code Snippets</string>
+	<string name="save_as_snippets">Save as snippet</string>
+	<string name="info_snippets">snippet</string>
+	<string name="snippet_confirm">Snippet exit, confirm to override ?</string>
+	<string name="save_as_snippets_1">Snippets has been Save as: </string>
+	<string name="fail_to_insert">Fail to insert snippet</string>
 
 </resources>

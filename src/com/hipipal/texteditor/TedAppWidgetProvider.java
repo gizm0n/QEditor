@@ -80,7 +80,7 @@ public class TedAppWidgetProvider extends AppWidgetProvider implements Constants
 		if (pref.mReadOnly)
 			views.setImageViewResource(R.id.icon, R.drawable.file_text_favorite_readonly);
 		else
-			views.setImageViewResource(R.id.icon, R.drawable.file_text_favorite);
+			views.setImageViewResource(R.id.icon, R.drawable.file_qpy);
 		views.setTextViewText(R.id.textFileName, targetFile.getName());
 
 		manager.updateAppWidget(widgetId, views);

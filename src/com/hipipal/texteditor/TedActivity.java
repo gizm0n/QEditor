@@ -60,6 +60,7 @@ import com.hipipal.texteditor.ui.view.AdvancedEditText;
 import com.hipipal.texteditor.undo.TextChangeWatcher;
 import com.zuowuxuxi.base.MyApp;
 import com.zuowuxuxi.base._WBase;
+import com.zuowuxuxi.util.FileHelper;
 import com.zuowuxuxi.util.NAction;
 import com.zuowuxuxi.util.NStorage;
 
@@ -76,6 +77,8 @@ import de.neofonie.mobile.app.android.widget.crouton.Style;
 public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		OnClickListener {
 	public static final String TAG = "TED";
+	final int DOC_FLAG = 10001;
+	boolean IS_DOC_BACK = false;
     protected QuickActionWidget mBarM;
     private int exitCount = 0;
     private QuickActionWidget mBar;
@@ -113,7 +116,12 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 
 		// editor
 		mEditor = (AdvancedEditText) findViewById(R.id.editor);
-		mEditor.setCustomSelectionActionModeCallback(new ActionBarCallBack());
+		try {
+			if (AndroidCompat.SDK>=Build.VERSION_CODES.HONEYCOMB)
+				mEditor.setCustomSelectionActionModeCallback(new ActionBarCallBack());
+		} catch (Exception e) {
+
+		}
 		// log output
 		//mLogField = (AdvancedEditText) findViewById(R.id.output_log);
 		//mLogField.setVisibility(View.GONE);
@@ -131,25 +139,25 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		findViewById(R.id.buttonSearchNext).setOnClickListener(this);
 		findViewById(R.id.buttonSearchPrev).setOnClickListener(this);
 		
-		mBar = new QuickActionBar(this);
+		/*mBar = new QuickActionBar(this);
         mBar.addQuickAction(new MyQuickAction(this, R.drawable.ic_delete, R.string.line_picker_title));
         mBar.addQuickAction(new MyQuickAction(this, R.drawable.code_snippet, R.string.code_snippets));
         mBar.addQuickAction(new MyQuickAction(this, R.drawable.ic_menu_share, R.string.share));
-        mBar.setOnQuickActionClickListener(mActionListener);
+        mBar.setOnQuickActionClickListener(mActionListener);*/
         
         MyApp.getInstance().addActivity(this, CONF.BASE_PATH,""); 
         if (code.equals("texteditor")) {
 	        MNApp mnApp = (MNApp) this.getApplication();
 	        mnApp.trackPageView("/"+NAction.getCode(getApplicationContext())+"/dashboard");
         }
-        ImageButton mMenuButton = (ImageButton) findViewById(R.id.help_button);
+        /*ImageButton mMenuButton = (ImageButton) findViewById(R.id.help_button);
         mMenuButton.setOnLongClickListener(new OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
 				mBar.show(v);
 				return false;				
 			}
-		});
+		});*/
         ImageButton mRunButton = (ImageButton) findViewById(R.id.play_btn);
         mRunButton.setOnLongClickListener(new OnLongClickListener() {
 			@Override
@@ -163,14 +171,20 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
         String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/com.hipipal.qpyplus";
         String path = baseDir + "/snippets";
 		File folder = new File(path);
-		if (folder.exists() && folder.isDirectory()) {
-		} else {
+		if (!(folder.exists() && folder.isDirectory())) {
 			folder.mkdir();
-			String file1 = LoadDataFromAssets("The MIT License (MIT)");
-			String file2 = LoadDataFromAssets("Apache License, Version 2.0");
-			writeToFile(path + "/Apache License", file1);
-			writeToFile(path + "/The MIT License", file2);
 		}
+		File f = new File(path + "/Apache_License");
+		if (!f.exists()) {
+			String file1 = LoadDataFromAssets("The_MIT_License");
+			writeToFile(path + "/Apache_License", file1);
+		}
+		f = new File(path + "/The_MIT_License");
+		if (!f.exists()) {
+			String file2 = LoadDataFromAssets("Apache_License");
+			writeToFile(path + "/The_MIT_License", file2);
+		}
+		
 		
 	}
 	private OnQuickActionClickListener mActionListener = new OnQuickActionClickListener() {
@@ -219,12 +233,13 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		builder.setItems(colors, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-//				Toast.makeText(getApplicationContext(), colors[which],
-//						Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getApplicationContext(), colors[which],
+					//	Toast.LENGTH_SHORT).show();
 				try {
 					insertSnippet(""+colors[which]);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					Toast.makeText(getApplicationContext(), R.string.fail_to_insert,
+						Toast.LENGTH_SHORT).show();
 					e.printStackTrace();
 				}
 			}
@@ -240,9 +255,9 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
     public void insertSnippet(String snippetName) throws IOException{
 		String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/com.hipipal.qpyplus";
 		String path = baseDir + "/snippets/";
-		//int start = mEditor.getSelectionStart(); //this is to get the the cursor position
+		int start = mEditor.getSelectionStart(); //this is to get the the cursor position
 		String s = readFile(path+snippetName);
-		mEditor.getText().insert(0, s);
+		mEditor.getText().insert(start, s);
 	}
     /**
      * Save code snippet 
@@ -253,10 +268,11 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 //		final String selectedText = mEditor.getText().toString().substring(startSelection, endSelection);
 		
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
-		alert.setTitle("Save as");
+		alert.setTitle(getString(R.string.save_as_snippets));
+		
 		final EditText input = new EditText(this);
 		input.setSingleLine(true);
-		input.setText("untitled");
+		input.setText(getString(R.string.info_snippets));
 		input.setSelection(input.getText().length());
 		alert.setView(input);
 //		input.addTextChangedListener(new TextWatcher() {
@@ -283,11 +299,31 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 			public void onClick(DialogInterface dialog, int whichButton) {
 				
 				String value = input.getText().toString();
-				Toast.makeText(getApplicationContext(), "Saved as: " + value,
-						Toast.LENGTH_SHORT).show();
 				String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/com.hipipal.qpyplus";
-				String saveName = baseDir + "/snippets/" + value;
-				writeToFile(saveName, selectedText);
+				final String saveName = baseDir + "/snippets/" + value;
+				
+				File f = new File(saveName);
+				if (f.exists()) {
+					
+					WBase.setTxtDialogParam(R.drawable.alert_dialog_icon, R.string.snippet_confirm, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							writeToFile(saveName, selectedText);
+							Toast.makeText(getApplicationContext(), getString(R.string.save_as_snippets_1) + saveName,
+									Toast.LENGTH_SHORT).show();
+
+						}
+						});
+						showDialog(_WBase.DIALOG_YES_NO_MESSAGE+dialogIndex);
+						dialogIndex++;
+
+						
+				} else {
+					writeToFile(saveName, selectedText);
+					Toast.makeText(getApplicationContext(), getString(R.string.save_as_snippets_1) + saveName,
+							Toast.LENGTH_SHORT).show();
+				}
+
 			}
 		});
 
@@ -333,10 +369,10 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 			//Change the button image 
 			mode.getMenuInflater().inflate(R.menu.action_bar_menu, menu);
 			ImageButton helpButton = (ImageButton) findViewById(R.id.help_button);
-			helpButton.setImageResource(R.drawable.help_icon);
+			helpButton.setImageResource(R.drawable.ic_unknown);
 			
-			ImageButton saveCode = (ImageButton) findViewById(R.id.save_as);
-			saveCode.setImageResource(R.drawable.add_code);
+			ImageButton saveCode = (ImageButton) findViewById(R.id.snip_button);
+			saveCode.setImageResource(R.drawable.ic_collection_new_1);
 			return true;
 		}
 
@@ -345,10 +381,10 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		{
 			//Change the button image back 
 			ImageButton helpButton = (ImageButton) findViewById(R.id.help_button);
-			helpButton.setImageResource(R.drawable.ic_collections_history);
+			helpButton.setImageResource(R.drawable.ic_action_overflow_dark);
 			
-			ImageButton saveCode = (ImageButton) findViewById(R.id.save_as);
-			saveCode.setImageResource(R.drawable.ic_save_as);
+			ImageButton saveCode = (ImageButton) findViewById(R.id.snip_button);
+			saveCode.setImageResource(R.drawable.ic_storage);
 
 		}
 
@@ -493,7 +529,6 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 				public void onClick(View v) {
 					onPlay(v);
 				}
-				
 			});
 
 		} else {
@@ -525,6 +560,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 			Log.d(TAG, "onPause");
 
 		if (Settings.FORCE_AUTO_SAVE && mDirty && (!mReadOnly)) {
+			
 			if ((mCurrentFilePath == null) || (mCurrentFilePath.length() == 0))
 				doAutoSaveFile(true);
 			else if (Settings.AUTO_SAVE_OVERWRITE)
@@ -544,6 +580,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		if (BuildConfig.DEBUG)
 			Log.d(TAG, "onActivityResult");
 		mReadIntent = false;
+
 
 		if (resultCode == RESULT_CANCELED) {
 			if (BuildConfig.DEBUG)
@@ -739,11 +776,14 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		String selectedText = mEditor.getText().toString().substring(startSelection, endSelection); 
 		if(selectedText.length() != 0){
 			//Toast.makeText(this, selectedText, Toast.LENGTH_SHORT).show();
-			String Search = "http://docs.python.org/2/search.html?q=" + selectedText;
+			//			String Search = "http://docs.qpython.org/2/search.html?q=" + selectedText;
+			String Search = "http://docs.qpython.org/doc/?q=" + selectedText;
 			Intent intent = new Intent(getApplicationContext(), MTubebook.class);
 			Uri data = Uri.parse(Search);
+			mReadIntent = false;
+			IS_DOC_BACK = true;
 			intent.setData(data);
-			startActivity(intent);
+			startActivityForResult(intent, DOC_FLAG);
 		}else{
 			Intent intent = new Intent(this, TedSettingsActivity.class);
 			startActivity(intent);
@@ -793,14 +833,13 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
-			if (mSearchLayout.getVisibility() != View.GONE)
-				search();
-			else if (Settings.UNDO && Settings.BACK_BTN_AS_UNDO) {
-				if (!undo())
-					warnOrQuit();
-			} else {
-				quit();
-			}
+				if (mSearchLayout.getVisibility() != View.GONE)
+					search();
+				else if (Settings.UNDO && Settings.BACK_BTN_AS_UNDO) {
+					
+					if (!undo())
+						warnOrQuit();
+				} 
 			return true;
 		case KeyEvent.KEYCODE_SEARCH:
 			search();
@@ -1262,6 +1301,26 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		promptSaveDirty();
 	}
 
+	protected void finishWithoutSave() {
+		mAfterSave = new Runnable() {
+			@Override
+			public void run() {
+				finish();
+			}
+		};
+
+		promptSaveDirty();
+	}
+	protected void quitWithoutSave() {
+		mAfterSave = new Runnable() {
+			@Override
+			public void run() {
+				doClearContents();
+			}
+		};
+
+		promptSaveDirty();
+	}
 	/**
 	 * Warns the user that the next back press will quit the application, or quit
 	 * if the warning has already been shown
@@ -1288,7 +1347,11 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 				if (code.equals("texteditor")) {
 					
 				} else {
-					finish();
+					if (mCurrentFilePath == null) {
+						finish();
+					} else {
+						newContent();
+					}
 				}
 			}
 		};
@@ -1307,6 +1370,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	    		break;	    		
 	    	case 30:
 	    		//mBarM.show(item.getItemView());
+	    		//SnippetsList();
 				newContent();
 	    		break;
 	    	case 40:
@@ -1318,17 +1382,75 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		return 	super.onHandleActionBarItemClick(item, position);
 	}
 	
+	public void onSnippets(View v) {
+		int startSelection=mEditor.getSelectionStart();
+		int endSelection=mEditor.getSelectionEnd();
+		String selectedText = mEditor.getText().toString().substring(startSelection, endSelection); 
+		/**
+		 * Detect if the text is selected
+		 */
+		if(selectedText.length() != 0){
+			getInfo();
+		}else{
+
+			SnippetsList();
+		}
+	}
 	@Override
 	public boolean onKeyDown(int keyCoder,KeyEvent event){
 		String code =NAction.getCode(this);
     	if (keyCoder == KeyEvent.KEYCODE_BACK) {
-	
-			if (code.equals("texteditor")) {
-				if (exitCount<1) {
-		    		endScreen();
-		    		exitCount++;
+			if (IS_DOC_BACK) {
+				IS_DOC_BACK = false;
+			} else {
+
+				if (code.equals("texteditor")) {
+					if (exitCount<1) {
+			    		endScreen();
+			    		exitCount++;
+					} else {
+						if (mCurrentFilePath == null) {
+							if (mDirty) {
+								quitWithoutSave();
+							} else {
+								finish();
+							}
+						} else {
+							Intent intent = getIntent();
+							String action = intent.getAction();
+							if (action == null) {
+								newContent();
+							} else {
+								if (mDirty) {
+									finishWithoutSave();
+								} else {
+									finish();
+
+								}
+							}
+						}
+					}
 				} else {
-					finish();
+					
+					if (mCurrentFilePath == null) {
+						if (mDirty) {
+							quitWithoutSave();
+						} else {
+							finish();
+						}
+					} else {
+						Intent intent = getIntent();
+						String action = intent.getAction();
+						if (action == null) {
+							newContent();
+						} else {
+							if (mDirty) {
+								finishWithoutSave();
+							} else {
+								finish();
+							}
+						}
+					}
 				}
 			}
     	}
@@ -1627,6 +1749,9 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	/**
 	 * Go to Line number in file
 	 */
+	public void onGotoLine(View v) {
+		goToLine();
+	}
 	public void goToLine(){
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.line_picker_title);
@@ -1704,17 +1829,8 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	 * @param v
 	 */
 	public void onSaveAs(View v) {
-		int startSelection=mEditor.getSelectionStart();
-		int endSelection=mEditor.getSelectionEnd();
-		String selectedText = mEditor.getText().toString().substring(startSelection, endSelection); 
-		/**
-		 * Detect if the text is selected
-		 */
-		if(selectedText.length() != 0){
-			getInfo();
-		}else{
 			saveContentAs();
-		}
+		//}
 
 	}
 	/**
@@ -1722,7 +1838,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	 * @param v
 	 */
 	public void onHistory(View v) {
-		openRecentFile();
+			openRecentFile();
 
 	}
 

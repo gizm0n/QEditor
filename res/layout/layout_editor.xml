@@ -50,6 +50,18 @@
 		android:background="@null"
 		android:onClick="onRight"		
 		/>
+
+		<ImageButton
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:padding="5.0dip"
+		android:layout_margin="0.0dip"
+		android:src="@drawable/ic_foword1" 
+		android:background="@null"
+		android:onClick="onGotoLine"		
+		/>
+
 		
 		<ImageButton
 		android:layout_width="0dp"
@@ -106,25 +118,27 @@
 		
 
 		
-		<!--ImageButton
-		android:layout_width="0dp"
-		android:layout_height="wrap_content"
-		android:layout_weight="1"
-		android:padding="5.0dip"
-		android:src="@drawable/ic_from_website" 
-		android:background="@null"
-		android:onClick="onBrowser"
-		/-->
-				
 		<ImageButton
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_weight="1"
 		android:padding="5.0dip"
-		android:src="@drawable/ic_storage" 
+		android:src="@drawable/ic_collections_history" 
 		android:background="@null"
 		android:onClick="onHistory"
 		/>		
+		
+		<ImageButton
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:id="@+id/snip_button"
+		android:padding="5.0dip"
+		android:src="@drawable/ic_storage" 
+		android:background="@null"
+		android:onClick="onSnippets"
+		/>
+				
 
 		<ImageButton
 		    android:id="@+id/help_button"
@@ -134,8 +148,8 @@
 		    android:background="@null"
 		    android:onClick="onSetting"
 		    android:padding="5.0dip"
-		    android:src="@drawable/ic_collections_history" />
-		
+		    android:src="@drawable/ic_action_overflow_dark" />
+		    
 	</LinearLayout>	
     <include
         android:id="@+id/searchLayout"

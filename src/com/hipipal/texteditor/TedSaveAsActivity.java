@@ -37,7 +37,7 @@ public class TedSaveAsActivity extends BrowsingActivity implements Constants, On
 
 		// drawables
 		mWriteable = getResources().getDrawable(R.drawable.folder_rw);
-		mLocked = getResources().getDrawable(R.drawable.folder_r);
+		mLocked = getResources().getDrawable(R.drawable.file_private);
 	}
 
 	/**

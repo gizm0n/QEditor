@@ -85,10 +85,6 @@ public class MTubebook extends _ABaseAct implements OnTouchListener, Handler.Cal
         setTitle(R.string.info_browser);
         //initWidgetTabItem(10);
 
-        if (NAction.getCode(this).startsWith("ysearch")) {
-	        ImageButton homeBtn = (ImageButton)findViewById(R.id.gd_action_bar_home_item);
-	        homeBtn.setImageResource(R.drawable.icon_nb);
-        }
         
     	ListView listView = (ListView)findViewById(android.R.id.list);
     	listView.addHeaderView(LayoutInflater.from(this).inflate(R.layout.v_tubebook_wrap, null));
@@ -137,43 +133,6 @@ public class MTubebook extends _ABaseAct implements OnTouchListener, Handler.Cal
 		}
 		    	
     	// check network
-		if (NAction.getCode(this).startsWith("ysearch")) {
-	    	if (!NUtil.isExternalStorageExists()) {
-	    		WBase.setTxtDialogParam(R.drawable.alert_dialog_icon, R.string.not_sd, new  DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface arg0, int arg1) {
-					}
-	    		});
-	    		showDialog(_WBase.DIALOG_NOTIFY_MESSAGE+dialogIndex);
-	    		dialogIndex++;
-	    	}
-	    	
-	    	if (!NUtil.netCheckin(getApplicationContext())) {
-	    		//Toast.makeText(getApplicationContext(), R.string.need_network, Toast.LENGTH_LONG).show();
-	    		Toast.makeText(getApplicationContext(), R.string.need_network, Toast.LENGTH_SHORT).show();
-
-	    	} else {
-	    		int now = VeDate.getStringDateHourAsInt();
-	    		int lastCheck = NAction.getUpdateCheckTime(this);
-	    		
-	    		if (!notifyErr(getApplicationContext())) {
-	    		
-	    			int q = NAction.getUpdateQ(getApplicationContext());
-	    			if (q==0) {
-	    				q = com.zuowuxuxi.config.CONF.UPDATEQ;
-	    			}
-	    			if ((now-lastCheck)>=q) {	// 每q小时检查一次更新/清空一下不必要的cache
-	    				checkUpdate(getApplicationContext(), true);
-	    				// 清空图片目录的缓存
-	    	    		String cacheDir = Environment.getExternalStorageDirectory()+"/"+CONF.BASE_PATH+"/"+com.zuowuxuxi.config.CONF.DCACHE+"/";
-	    				FileHelper.clearDir(cacheDir, 0, false);
-	    				
-	    				// 清理DB缓存
-	    				
-	    			}
-	    		}
-	    	}
-		}    	
 
 		// display input
     	View tl = findViewById(R.id.topline);

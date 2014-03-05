@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|top"
         android:padding="2dp"
-        android:src="@drawable/file_text_favorite" />
+        android:src="@drawable/file_qpy" />
 
     <TextView
         android:id="@+id/textFileName"
