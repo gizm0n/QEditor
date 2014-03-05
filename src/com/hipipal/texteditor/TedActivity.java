@@ -88,7 +88,6 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 
         if (code.equals("texteditor")) {
 	        
-	        
 			checkUpdate(CONF.BASE_PATH);
         }
 
@@ -1426,6 +1425,8 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 				//doAutoSaveFile(false);
 				doSaveFile(mCurrentFilePath, false);
 
+				//Intent intent = new Intent();
+				//intent.setClassName(this, "");
 				Intent intent = new Intent(getApplicationContext(), MTubebook.class);
 				Uri data = Uri.fromFile(new File(mCurrentFilePath));
 				intent.setData(data);
