@@ -61,6 +61,7 @@ import com.hipipal.texteditor.undo.TextChangeWatcher;
 import com.zuowuxuxi.base.MyApp;
 import com.zuowuxuxi.base._WBase;
 import com.zuowuxuxi.util.NAction;
+import com.zuowuxuxi.util.NStorage;
 
 import de.neofonie.mobile.app.android.widget.crouton.Crouton;
 import de.neofonie.mobile.app.android.widget.crouton.Style;
@@ -1340,15 +1341,46 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 	 */
 	@SuppressWarnings("deprecation")
 	public void endScreen() {
-		WBase.setTxtDialogParam2(0, R.string.confirm_exit,  getString(R.string.feed_back), getString(R.string.follow_community), "",getString(R.string.feedback_btn), getString(R.string.follow_community_btn),"",
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						finish();
-					}
-				},null);
-		showDialog(_WBase.DIALOG_BTN_ENTRY1+dialogIndex);
-		dialogIndex++;
+		String c = NStorage.getSP(this, "end_count");
+		if (c.equals("")) {
+			c = "0";
+		}
+		int e =  Integer.parseInt(c)+1;
+
+		int x = 1;
+		if (e>10000) {
+			//
+		} else if (e>100) {
+			NStorage.setSP(this, "end_count", String.valueOf(e));
+
+			x = e%100;
+		} else {
+			NStorage.setSP(this, "end_count", String.valueOf(e));
+
+			x = e%10;
+		}
+		if (x == 0) {
+			WBase.setTxtDialogParam2(0, R.string.confirm_exit, getString(R.string.feed_back), getString(R.string.follow_community),getString(R.string.rate_app), getString(R.string.feedback_btn), getString(R.string.follow_community_btn),getString(R.string.rate_btn),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							finish();
+						}
+					},null);
+			showDialog(_WBase.DIALOG_BTN_ENTRY1+dialogIndex);
+			dialogIndex++;
+
+		} else {
+			WBase.setTxtDialogParam2(0, R.string.confirm_exit, getString(R.string.feed_back), getString(R.string.follow_community),"", getString(R.string.feedback_btn), getString(R.string.follow_community_btn),"",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							finish();
+						}
+					},null);
+			showDialog(_WBase.DIALOG_BTN_ENTRY1+dialogIndex);
+			dialogIndex++;
+		}
 	}
 	
 	/**
@@ -1810,12 +1842,30 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 
 	}
 
+	public void onExitPrompt3(View v) {
+		String url = NAction.getExtP(getApplicationContext(), "conf_rate_url");
+		if (url.equals("")) {
+			url = NAction.getInstallLink(getApplicationContext());
+		}
+		if (url.equals("")) {
+			url = CONF.QEDIT_RATE_LINK;
+		}
+		try {
+			Intent intent = NAction.openRemoteLink(getApplicationContext(), url);
+			startActivity(intent);
+		} catch (Exception e) {
+			Intent intent = NAction.openRemoteLink(getApplicationContext(), CONF.QEDIT_RATE_LINK);
+			startActivity(intent);
+
+		}
+	}
 	
 	/**
 	 * Defines the keyboard layout 
 	 * @author kyle kersey
 	 * http://developer.android.com/reference/android/view/KeyEvent.html
 	 */
+	@SuppressLint("NewApi")
 	@Override
 	public boolean onKeyShortcut(int keyCode, KeyEvent event){
 		if(event.isCtrlPressed()){

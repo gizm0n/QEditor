@@ -7,6 +7,7 @@ public class CONF extends com.zuowuxuxi.config.CONF{
     public final static String BASE_PATH = "com.hipipal.qpyplus";
     public final static String COMMUNITY_LINK = "http://qpython.com/qedit/";
     public final static String NEWS_LINK = "http://qpython.com/qedit/news/";
+    public final static String QEDIT_RATE_LINK = "http://www.facebook.com/QEditor";
 
     public final static String UPDATE_URL = "http://"+BA_SITE2+"/conf/update/";
     public final static String LOG_URL = "http://"+BA_SITE2+"/conf/log/";
