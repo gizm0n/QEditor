@@ -158,7 +158,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 				return false;				
 			}
 		});*/
-        ImageButton mRunButton = (ImageButton) findViewById(R.id.play_btn);
+        /*ImageButton mRunButton = (ImageButton) findViewById(R.id.play_btn);
         mRunButton.setOnLongClickListener(new OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
@@ -167,7 +167,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 				startActivity(intent);
 				return false;				
 			}
-		});
+		});*/
         String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/com.hipipal.qpyplus";
         String path = baseDir + "/snippets";
 		File folder = new File(path);
@@ -176,15 +176,31 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		}
 		File f = new File(path + "/Apache_License");
 		if (!f.exists()) {
-			String file1 = LoadDataFromAssets("The_MIT_License");
+			String file1 = LoadDataFromAssets("Apache_License");
 			writeToFile(path + "/Apache_License", file1);
 		}
 		f = new File(path + "/The_MIT_License");
 		if (!f.exists()) {
-			String file2 = LoadDataFromAssets("Apache_License");
+			String file2 = LoadDataFromAssets("The_MIT_License");
 			writeToFile(path + "/The_MIT_License", file2);
 		}
-		
+		f = new File(path + "/QPy_WebApp");
+		if (!f.exists()) {
+			String file2 = LoadDataFromAssets("QPy_WebApp");
+			writeToFile(path + "/QPy_WebApp", file2);
+		}
+
+		f = new File(path + "/QPy_GUIApp");
+		if (!f.exists()) {
+			String file2 = LoadDataFromAssets("QPy_GUIApp");
+			writeToFile(path + "/QPy_GUIApp", file2);
+		}
+
+		f = new File(path + "/QPy_ConsoleApp");
+		if (!f.exists()) {
+			String file2 = LoadDataFromAssets("QPy_ConsoleApp");
+			writeToFile(path + "/QPy_ConsoleApp", file2);
+		}
 		
 	}
 	private OnQuickActionClickListener mActionListener = new OnQuickActionClickListener() {
@@ -1481,7 +1497,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 
 			x = e%10;
 		}
-		if (x == 0) {
+		if (x==0 || e<3) {
 			WBase.setTxtDialogParam2(0, R.string.confirm_exit, getString(R.string.feed_back), getString(R.string.follow_community),getString(R.string.rate_app), getString(R.string.feedback_btn), getString(R.string.follow_community_btn),getString(R.string.rate_btn),
 					new DialogInterface.OnClickListener() {
 						@Override
@@ -1753,24 +1769,57 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		goToLine();
 	}
 	public void goToLine(){
+		//String tip = "Line number less than "+mEditor.getLineCount();
+		//final EditText input = new EditText(this);
+
+		WBase.setTxtDialogParam(0, R.string.line_picker_title, "",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+				        AlertDialog ad = (AlertDialog) dialog;  
+				        EditText t = (EditText) ad.findViewById(R.id.editText_prompt);
+				        String content = t.getText().toString();
+
+				    	int lineCount = mEditor.getLineCount();
+				    	try {
+					        int lineNumberToGoTo = Integer.parseInt(content); 
+					        if(lineNumberToGoTo < lineCount){		        
+					        	int position = NewLineIndex(lineNumberToGoTo);
+					        	mEditor.setSelection(position); 
+					        }else{
+					        	Toast.makeText(getApplicationContext(), R.string.fail_to_goto, Toast.LENGTH_SHORT).show();
+					        }
+				    	} catch (Exception e) {
+				        	Toast.makeText(getApplicationContext(), R.string.fail_to_goto, Toast.LENGTH_SHORT).show();
+				        }
+
+					}
+				},null);
+		showDialog(_WBase.DIALOG_TEXT_ENTRY+1);
+		/*
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.line_picker_title);
 		final EditText input = new EditText(this);
 		input.setInputType(InputType.TYPE_CLASS_NUMBER);
-		input.setHint("Line number less than "+mEditor.getLineCount());
+		input.setHint();
 		builder.setView(input);
 		
 		builder.setPositiveButton("Go To", new DialogInterface.OnClickListener() { 
 		    @Override
 		    public void onClick(DialogInterface dialog, int which) {
 		    	int lineCount = mEditor.getLineCount();
-		        int lineNumberToGoTo = Integer.parseInt(input.getText().toString()); 
-		        if(lineNumberToGoTo < lineCount){		        
-		        	int position = NewLineIndex(lineNumberToGoTo);
-		        	mEditor.setSelection(position); 
-		        }else{
-		        	Toast.makeText(getApplicationContext(), "out of range", Toast.LENGTH_SHORT).show();
+		    	try {
+			        int lineNumberToGoTo = Integer.parseInt(input.getText().toString()); 
+			        if(lineNumberToGoTo < lineCount){		        
+			        	int position = NewLineIndex(lineNumberToGoTo);
+			        	mEditor.setSelection(position); 
+			        }else{
+			        	Toast.makeText(getApplicationContext(), R.string.fail_to_goto, Toast.LENGTH_SHORT).show();
+			        }
+		    	} catch (Exception e) {
+		        	Toast.makeText(getApplicationContext(), R.string.fail_to_goto, Toast.LENGTH_SHORT).show();
 		        }
+
 		    }
 		});
 		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -1780,6 +1829,7 @@ public class TedActivity extends _ABaseAct implements Constants, TextWatcher,
 		    }
 		});
 		builder.show();
+		*/
 	}
 	
 	/**

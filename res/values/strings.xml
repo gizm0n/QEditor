@@ -121,5 +121,6 @@
 	<string name="snippet_confirm">Snippet exit, confirm to override ?</string>
 	<string name="save_as_snippets_1">Snippets has been Save as: </string>
 	<string name="fail_to_insert">Fail to insert snippet</string>
+	<string name="fail_to_goto">Please input correct number</string>
 
 </resources>

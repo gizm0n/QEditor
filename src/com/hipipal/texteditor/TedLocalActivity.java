@@ -109,8 +109,15 @@ public class TedLocalActivity extends _ABaseAct implements Constants {
         	
         });
     	String root = NAction.getDefaultRoot(getApplicationContext());
+    	String code = NAction.getCode(this);
     	if (root.equals("")) {
-    		root = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/com.hipipal.qpyplus";
+    		if (code.startsWith("qpy")) {
+    			root = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/com.hipipal.qpyplus";
+    	
+    		} else {
+        		root = Environment.getExternalStorageDirectory().getAbsolutePath().toString();
+
+    		}
     	}
     	
         curArtistDir = new Stack<String>();
